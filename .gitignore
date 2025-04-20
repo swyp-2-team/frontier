@@ -17,8 +17,6 @@ dist-ssr
 
 # 의존성 관련
 node_modules
-package.json
-package-lock.json
 
 # Editor directories and files
 .vscode/*

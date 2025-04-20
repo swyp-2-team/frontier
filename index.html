@@ -5,9 +5,42 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 2rem;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        color: #333;
+      }
+      #result {
+        white-space: pre-line;
+        margin-top: 1rem;
+        padding: 1rem;
+        background: #fff;
+        border: 1px solid #ccc;
+        font-family: monospace;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <h1>Hello from Static S3 + CloudFront</h1>
+      <button onclick="callApi()">Call API</button>
+      <div id="result">API response will appear here</div>
+    </div>
     <script type="module" src="/src/app/main.tsx"></script>
+    <script>
+      async function callApi() {
+        try {
+          const response = await fetch('/api/test');
+          const data = await response.text();
+          document.getElementById('result').textContent = data;
+        } catch (error) {
+          document.getElementById('result').textContent = 'Error: ' + error.message;
+        }
+      }
+    </script>
   </body>
 </html>

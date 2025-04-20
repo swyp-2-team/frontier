@@ -1,5 +1,5 @@
-import { cn } from "../../lib/utils";
-import { Button } from "../ui/button";
+import { cn } from "@shared/lib/utils";
+import { Button } from "@shared/components/ui/button";
 import {
   Card,
   CardContent,

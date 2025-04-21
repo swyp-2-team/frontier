@@ -9,11 +9,50 @@ import {
 } from "../ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+// 임시 설정한 로그인 가능한 로그인 데이터
+const MOCK_USERDATA = {
+  email: "test@test.com",
+  password: "test123",
+};
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const navigate = useNavigate();
+  // 입력값 상태관리
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+
+  // input값 변경 핸들러
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // form 제출시 실행되는 함수
+  const onLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // 입력한 email, password 추출
+    const email = input.email;
+    const password = input.password;
+
+    // 입력값 검증
+    if (email === MOCK_USERDATA.email && password === MOCK_USERDATA.password) {
+      navigate("/");
+    } else {
+      alert("Email과 Password를 확인하세요.");
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -24,14 +63,16 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={onLogin}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
+                  onChange={onChangeInput}
                   required
                 />
               </div>
@@ -45,7 +86,13 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  name="password"
+                  onChange={onChangeInput}
+                  type="password"
+                  required
+                />
               </div>
               <Button type="submit" className="w-full">
                 Login

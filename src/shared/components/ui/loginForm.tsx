@@ -48,6 +48,7 @@ export function LoginForm({
     // 입력값 검증
     if (email === MOCK_USERDATA.email && password === MOCK_USERDATA.password) {
       navigate("/");
+      sessionStorage.setItem("userEmail", input.email);
     } else {
       alert("Email과 Password를 확인하세요.");
     }

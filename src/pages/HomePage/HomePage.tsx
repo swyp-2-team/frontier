@@ -1,16 +1,8 @@
-import { useEffect, useState } from "react";
+import { useUserRender } from "@/features/auth/model/useUserRender";
 
 export default function HomePage() {
-  const [email, setEmail] = useState<string>("");
-
-  // 로그인한 유저 이메일을 화면에 렌더링
-  useEffect(() => {
-    const userEmail = sessionStorage.getItem("userEmail");
-
-    if (userEmail) {
-      setEmail(userEmail);
-    }
-  }, []);
+  // user email 렌더링 훅에서 email 값 가져오기
+  const { email } = useUserRender();
 
   return (
     <>

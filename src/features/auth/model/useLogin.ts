@@ -7,7 +7,7 @@ const MOCK_USERDATA = {
   password: "test123",
 };
 
-export default function useLogin() {
+export function useLogin() {
   const navigate = useNavigate();
   // 입력값 상태관리
   const [input, setInput] = useState({

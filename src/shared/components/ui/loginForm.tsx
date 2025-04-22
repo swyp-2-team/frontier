@@ -9,7 +9,7 @@ import {
 } from "../ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import useLogin from "@/features/auth/model/useLogin";
+import { useLogin } from "@/features/auth/model/useLogin";
 
 export function LoginForm({
   className,

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@tailwind utilities;
 
 @custom-variant dark (&:is(.dark *));
 
@@ -194,38 +195,79 @@
   }
 }
 
-@layer components {
-  .headline-48 {
-    @apply text-[48px] font-medium leading-[62px] tracking-[-0.025em];
-  }
-  .headline-40 {
-    @apply text-[40px] font-medium leading-[52px] tracking-[-0.025em];
-  }
-  .title-24 {
-    @apply text-[24px] font-medium leading-[34px] tracking-[-0.025em];
-  }
-  .title-20 {
-    @apply text-[20px] font-medium leading-[30px] tracking-[-0.025em];
-  }
-  .title-20_SB {
-    @apply text-[20px] font-semibold leading-[30px] tracking-[-0.025em];
-  }
-  .body-18 {
-    @apply text-[18px] font-medium leading-[28px] tracking-[-0.025em];
-  }
-  .body-16_SB {
-    @apply text-[16px] font-semibold leading-[24px] tracking-[-0.025em];
-  }
-  .body-16 {
-    @apply text-[16px] font-semibold leading-[24px] tracking-[-0.025em];
-  }
-  .body-15 {
-    @apply text-[15px] font-medium leading-[22px] tracking-[-0.025em];
-  }
-  .body-14 {
-    @apply text-[14px] font-medium leading-[20px] tracking-[-0.025em];
-  }
-  .body-13 {
-    @apply text-[13px] font-medium leading-[18px] tracking-[-0.025em];
-  }
+@utility headline-48 {
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 62px;
+  letter-spacing: -0.025em;
+}
+
+@utility headline-40 {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 52px;
+  letter-spacing: -0.025em;
+}
+
+@utility title-24 {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 34px;
+  letter-spacing: -0.025em;
+}
+
+@utility title-20 {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.025em;
+}
+
+@utility title-20_SB {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: -0.025em;
+}
+
+@utility body-18 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: -0.025em;
+}
+
+@utility body-16_SB {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: -0.025em;
+}
+
+@utility body-16 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.025em;
+}
+
+@utility body-15 {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.025em;
+}
+
+@utility body-14 {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.025em;
+}
+
+@utility body-13 {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.025em;
 }

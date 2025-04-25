@@ -234,6 +234,12 @@
   line-height: 28px;
 }
 
+@utility body-18_SB {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
 @utility body-16_SB {
   font-size: 16px;
   font-weight: 600;

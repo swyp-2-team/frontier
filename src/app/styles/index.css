@@ -78,6 +78,8 @@
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-inner-custom: inset 1px 1px 2px rgba(17, 0, 116, 0.15),
+    inset -1px -1px 1px rgba(255, 255, 255, 1);
 
   /* 반응형 중단점 */
   --breakpoint-sm: 40rem;

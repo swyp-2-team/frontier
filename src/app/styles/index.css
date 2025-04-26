@@ -65,6 +65,9 @@
   --color-gray-200: #f1f1f5;
   --color-gray-100: #fbf9f7;
 
+  /* Font color */
+  --color-red: #ed1c24;
+
   /* 폰트 설정 */
   --font-sans: "Noto Sans", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji";
@@ -204,6 +207,12 @@
   line-height: 62px;
 }
 
+@utility headline-40_SB {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 52px;
+}
+
 @utility headline-40 {
   font-size: 40px;
   font-weight: 500;
@@ -213,6 +222,12 @@
 @utility title-24 {
   font-size: 24px;
   font-weight: 500;
+  line-height: 34px;
+}
+
+@utility title-24_SB {
+  font-size: 24px;
+  font-weight: 600;
   line-height: 34px;
 }
 

@@ -13,8 +13,6 @@
       "@features/*": ["features/*"],
       "@shared/*": ["shared/*"],
       "@router/*": ["router/*"]
-    },
-    "types": ["vite/client"]
-  },
-  "include": ["svg.d.ts"]
+    }
+  }
 }

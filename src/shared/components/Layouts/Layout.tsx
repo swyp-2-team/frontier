@@ -6,7 +6,6 @@ export default function Layout() {
     <>
       <Header></Header>
       <Outlet />
-      <footer className="h-20 bg-amber-200">Footer</footer>
     </>
   );
 }

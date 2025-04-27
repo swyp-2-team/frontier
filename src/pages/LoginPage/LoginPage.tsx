@@ -3,7 +3,7 @@ import { LoginForm } from "@/features/auth/ui/loginForm";
 export default function LoginPage() {
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden">
-      <div className="flex-1 h-full">
+      <div className="flex-1 h-full max-w-lg">
         <img
           src="/src/assets/images/logIn.png"
           alt="Login"

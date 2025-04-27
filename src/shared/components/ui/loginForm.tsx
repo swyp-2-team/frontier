@@ -6,7 +6,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useLogin } from "@/features/auth/model/useLogin";
 
-//import circleSpread from "@/assets/icons/circle_spread.svg";
+import CircleSpread from "@/assets/icons/circle-spread.svg?react";
 //import eyeOn from "@/assets/icons/eyes_on.svg";
 //import eyeoff from "@/assets/icons/eyes_off.svg";
 
@@ -72,9 +72,15 @@ export function LoginForm({
                   className="flex items-center gap-2 cursor-pointer"
                   onClick={() => toggleState("isLoginChecked")}
                 >
-                  <div className="text-right justify-start body-16 leading-normal">
+                  <CircleSpread
+                    className={cn(
+                      "w-6 h-6 transition-colors",
+                      state.isLoginChecked ? "text-gray-900" : "text-gray-400"
+                    )}
+                  />
+                  <span className="text-right justify-start body-16 leading-normal">
                     로그인 상태 유지
-                  </div>
+                  </span>
                 </div>
               </div>
               <Button

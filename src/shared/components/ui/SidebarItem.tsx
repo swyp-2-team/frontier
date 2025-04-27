@@ -18,10 +18,12 @@ export default function SidebarItem({
   return (
     <Button
       asChild
-      variant={"ghost"}
+      variant={"sidebar"}
       className={cn(
         "w-[200px] h-[60px] rounded-[12px] body-18 text-gray-700 px-3 justify-normal",
-        active ? "body-18_SB bg-secondary text-primary shadow-inner-custom" : ""
+        active
+          ? "body-18_SB bg-secondary text-primary shadow-inner-custom"
+          : "hover:text-primary"
       )}
     >
       <Link to={href} className="flex gap-2">

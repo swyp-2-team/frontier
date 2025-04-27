@@ -1,5 +1,6 @@
 import { useUserRender } from "@/features/auth/model/useUserRender";
 import SidebarItem from "@/shared/components/ui/SidebarItem";
+import HomeIcon from "@/assets/icons/home.svg?react";
 
 export default function HomePage() {
   // user email 렌더링 훅에서 email 값 가져오기
@@ -7,7 +8,12 @@ export default function HomePage() {
 
   return (
     <>
-      <SidebarItem href={"/"} label="HOME" active={true} />
+      <SidebarItem
+        icon={<HomeIcon className="size-6" />}
+        href={"/"}
+        label="HOME"
+        active={true}
+      />
       {email ? (
         <div>
           <h1>환영합니다, {email}님! </h1>

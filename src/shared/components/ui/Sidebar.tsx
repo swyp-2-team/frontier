@@ -10,7 +10,7 @@ export default function Sidebar() {
   const currentPath = useGetCurrentPath();
 
   return (
-    <aside className="w-60 bg-gray-100 p-6 flex flex-col">
+    <aside className="w-60 py-4 px-5 border-r border-gray-400 flex flex-col">
       <nav className="flex flex-col gap-4">
         <SidebarItem
           icon={<HomeIcon className="size-6" />}
@@ -21,14 +21,14 @@ export default function Sidebar() {
         <SidebarItem
           icon={<PencilIcon className="size-6" />}
           label="장애등록"
-          active={currentPath === "/incidents/new"}
-          href="/incidents/new"
+          active={currentPath === "incident-register"}
+          href="incident-register"
         />
         <SidebarItem
           icon={<DataIcon className="size-6" />}
           label="장애관리"
-          active={currentPath === "/incidents"}
-          href="/incidents"
+          active={currentPath === "/incident-mnt"}
+          href="/incident-mnt"
         />
         <SidebarItem
           icon={<SheildIcon className="size-6" />}

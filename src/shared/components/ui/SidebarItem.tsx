@@ -20,14 +20,22 @@ export default function SidebarItem({
       asChild
       variant={"sidebar"}
       className={cn(
-        "w-[200px] h-[60px] rounded-[12px] body-18 text-gray-700 px-3 justify-normal",
+        "w-[200px] h-[60px] rounded-[12px] body-18 text-gray-700 px-3 justify-normal group",
         active
           ? "body-18_SB bg-secondary text-primary shadow-inner-custom"
           : "hover:text-primary"
       )}
     >
       <Link to={href} className="flex gap-2">
-        {icon}
+        <div
+          className={cn(
+            active
+              ? ""
+              : "text-gray-500 group-hover:text-primary transition-all"
+          )}
+        >
+          {icon}
+        </div>
         {label}
       </Link>
     </Button>

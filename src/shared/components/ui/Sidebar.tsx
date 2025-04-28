@@ -21,8 +21,8 @@ export default function Sidebar() {
         <SidebarItem
           icon={<PencilIcon className="size-6" />}
           label="장애등록"
-          active={currentPath === "incident-register"}
-          href="incident-register"
+          active={currentPath === "/incident-register"}
+          href="/incident-register"
         />
         <SidebarItem
           icon={<DataIcon className="size-6" />}

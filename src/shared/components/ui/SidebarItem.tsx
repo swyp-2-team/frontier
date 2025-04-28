@@ -18,7 +18,7 @@ export default function SidebarItem({
   return (
     <Button
       asChild
-      variant={"sidebar"}
+      variant={"basic"}
       className={cn(
         "w-[200px] h-[60px] rounded-[12px] body-18 text-gray-700 px-3 justify-normal group",
         active

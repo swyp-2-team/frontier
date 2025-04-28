@@ -11,7 +11,7 @@ export default function Sidebar() {
 
   return (
     <aside className="w-60 py-4 px-5 border-r border-gray-400 flex flex-col">
-      <nav className="flex flex-col gap-4">
+      <nav className="flex flex-col">
         <SidebarItem
           icon={<HomeIcon className="size-6" />}
           label="HOME"

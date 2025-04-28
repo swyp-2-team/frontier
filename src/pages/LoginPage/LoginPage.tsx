@@ -1,11 +1,12 @@
 import { LoginForm } from "@/features/auth/ui/loginForm";
+import logInImage from "@/assets/images/logIn.png";
 
 export default function LoginPage() {
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden">
       <div className="flex-1 h-full max-w-lg">
         <img
-          src="/src/assets/images/logIn.png"
+          src={logInImage}
           alt="Login"
           className="w-full h-full object-cover"
         />

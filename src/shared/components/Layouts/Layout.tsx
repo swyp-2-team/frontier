@@ -4,9 +4,9 @@ import { Outlet } from "react-router-dom";
 
 export default function Layout() {
   return (
-    <div className="bg-gray-200 space-y-16 h-screen">
+    <div className="bg-gray-200 space-y-16 h-full">
       <Header></Header>
-      <div className="flex">
+      <div className="flex pb-9">
         <Sidebar />
         <Outlet />
       </div>

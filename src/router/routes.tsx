@@ -9,20 +9,17 @@ import { createBrowserRouter } from "react-router-dom";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: "incident-register", element: <IncidentRegisterPage /> },
-      { path: "/incident-mnt", element: <IncidentMntPage /> },
-      {
-        path: "/users",
-        element: <MntPage />,
-      },
-    ],
+    element: <LoginPage />,
   },
   {
-    path: "/users/login",
-    element: <LoginPage />,
+    path: "/",
+    element: <Layout />,
+    children: [
+      { path: "home", element: <HomePage /> },
+      { path: "incident-register", element: <IncidentRegisterPage /> },
+      { path: "incident-mnt", element: <IncidentMntPage /> },
+      { path: "management", element: <MntPage /> },
+    ],
   },
 ]);
 

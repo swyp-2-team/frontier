@@ -15,8 +15,8 @@ export default function Sidebar() {
         <SidebarItem
           icon={<HomeIcon className="size-6" />}
           label="HOME"
-          active={currentPath === "/"}
-          href="/"
+          active={currentPath === "/home"}
+          href="/home"
         />
         <SidebarItem
           icon={<PencilIcon className="size-6" />}
@@ -33,8 +33,8 @@ export default function Sidebar() {
         <SidebarItem
           icon={<SheildIcon className="size-6" />}
           label="사용자 및 그룹 관리"
-          active={currentPath === "/users"}
-          href="/users"
+          active={currentPath === "/management"}
+          href="/management"
         />
       </nav>
     </aside>

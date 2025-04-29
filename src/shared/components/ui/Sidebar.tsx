@@ -10,7 +10,7 @@ export default function Sidebar() {
   const currentPath = useGetCurrentPath();
 
   return (
-    <aside className="w-60 py-4 px-5 border-r border-gray-400 flex flex-col">
+    <aside className="w-60 py-4 px-5 flex flex-col h-fit sticky top-0">
       <nav className="flex flex-col">
         <SidebarItem
           icon={<HomeIcon className="size-6" />}

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Banner() {
   return (
-    <div className="flex flex-1 bg-[url('@/assets/images/banner.png')] bg-cover bg-center rounded-[16px] h-[370px] text-white">
+    <div className="flex flex-1 bg-[url('/images/banner.png')] bg-cover bg-center rounded-[16px] h-[370px] text-white">
       <div className="flex flex-col w-full bg-gradient-to-b justify-center items-center from-black/28 to-transparent rounded-[16px]">
         <h2 className="headline-40 mb-6">
           장애를 손쉽게 등록하고, 실시간으로 전파하세요

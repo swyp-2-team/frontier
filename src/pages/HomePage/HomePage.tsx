@@ -4,7 +4,7 @@ import HowToUse from "@/shared/components/ui/HowToUse";
 
 export default function HomePage() {
   return (
-    <main className="flex-1 pt-[10px] px-[42px] overflow-y-auto border-l border-gray-400">
+    <main className="flex-1 px-[42px] overflow-y-auto border-l border-gray-400">
       <section className="flex gap-8 w-full mb-8">
         <Banner />
         <HowToUse />

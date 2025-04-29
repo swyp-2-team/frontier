@@ -289,3 +289,9 @@
   font-weight: 500;
   line-height: 18px;
 }
+
+@utility body-13_SB {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+}

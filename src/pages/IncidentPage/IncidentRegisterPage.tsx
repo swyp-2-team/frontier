@@ -12,6 +12,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@shared/components/ui/accordion";
+import PasteIcon from "@/assets/icons/paste.svg?react";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@shared/components/ui/tooltip";
 
 const groups = [
   {
@@ -143,46 +151,58 @@ export default function IncidentRegisterPage() {
               </p>
             </div>
 
-            <div className="space-y-3">
-              <article className="bg-white border rounded-lg px-4 py-2 flex justify-between items-center">
-                <div className="text-sm text-gray-600">
-                  <strong className="mr-2">받는 사람</strong>abc@gmail.com
-                </div>
-                <button
-                  aria-label="복사"
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  📋
-                </button>
+            <div className="space-y-[10px]">
+              <article className="h-13 bg-white rounded-[12px] flex items-center px-6 py-[14px] border-gray-400">
+                <p className="body-16_SB text-gray-700 mr-[10px]">받는 사람</p>
+                <p className="body-13 text-gray-600">abc@gmail.com</p>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger className="ml-auto ">
+                      <PasteIcon className="text-gray-600 size-6 cursor-pointer" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>복사하기</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </article>
 
-              <article className="bg-white border rounded-lg px-4 py-2 flex justify-between items-center">
-                <div className="text-sm text-gray-600">
-                  <strong className="mr-2">제목</strong>503 Service Unavailable
-                  한국 출력 오류
-                </div>
-                <button
-                  aria-label="복사"
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  📋
-                </button>
+              <article className="h-13 bg-white rounded-[12px] flex px-6 py-[14px] border-gray-400 items-center">
+                <p className="body-16_SB text-gray-700 mr-[10px]">제목</p>
+                <p className="body-13 text-gray-600">
+                  503 Service Unavailable 문구 출력 오류
+                </p>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger className="ml-auto ">
+                      <PasteIcon className="text-gray-600 size-6 cursor-pointer" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>복사하기</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </article>
 
-              <article className="bg-white border rounded-lg p-4">
-                <div className="flex justify-between items-start">
-                  <div className="text-sm text-gray-700 space-y-2">
-                    <p>1. 장애 발생 시간 :</p>
-                    <p>2. 장애 확인 경로 :</p>
-                    <p>3. 장애 증상 :</p>
-                    <p>4. 영향 범위 :</p>
-                  </div>
-                  <button
-                    aria-label="복사"
-                    className="text-gray-400 hover:text-gray-600 mt-1"
-                  >
-                    📋
-                  </button>
+              <article className="pb-[62px] bg-white rounded-[12px] flex flex-col px-6 py-[14px] border-gray-400">
+                <div className="flex items-center mb-[22px]">
+                  <p className="body-16_SB text-gray-700">내용</p>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger className="ml-auto ">
+                        <PasteIcon className="text-gray-600 size-6 cursor-pointer" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>복사하기</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+                <div className="body-13 text-gray-800 space-y-[22px] px-3">
+                  <p>1. 장애 발생 시간 :</p>
+                  <p>2. 장애 확인 경로 :</p>
+                  <p>3. 장애 증상 :</p>
+                  <p>4. 영향 범위 :</p>
                 </div>
               </article>
             </div>

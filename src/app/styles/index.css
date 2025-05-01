@@ -204,9 +204,8 @@
   * {
     @apply border-border;
   }
-  body {
-    /* font가 적용이 안 되어서 전체 페이지에 적용되도록 수정함 */
-    @apply bg-background text-foreground font-['Noto_Sans'];
+  html {
+    @apply font-sans;
   }
 }
 

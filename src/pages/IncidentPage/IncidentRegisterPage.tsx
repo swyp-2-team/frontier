@@ -17,7 +17,6 @@ import PasteIcon from "@/assets/icons/paste.svg?react";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@shared/components/ui/tooltip";
 

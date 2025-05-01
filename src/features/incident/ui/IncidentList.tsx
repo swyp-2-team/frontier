@@ -30,7 +30,11 @@ const DUMMY_INCIDENT_LIST = [
   },
 ];
 
-export default function IncidentList({ showActive }: { showActive: boolean }) {
+export default function IncidentList({
+  showActive = true,
+}: {
+  showActive: boolean;
+}) {
   const incidents = showActive
     ? DUMMY_INCIDENT_LIST.filter((item) => item.isActive)
     : DUMMY_INCIDENT_LIST.filter((item) => !item.isActive); // 히스토리만 표시하도록 변경
@@ -48,6 +52,13 @@ export default function IncidentList({ showActive }: { showActive: boolean }) {
           isActive={item.isActive} // 각 항목의 원래 isActive 값을 전달
         />
       ))}
+      {incidents.length === 0 && (
+        <div className="text-center py-8 text-gray-500">
+          {showActive
+            ? "현재 진행 중인 장애가 없습니다."
+            : "장애 히스토리가 없습니다."}
+        </div>
+      )}
     </section>
   );
 }

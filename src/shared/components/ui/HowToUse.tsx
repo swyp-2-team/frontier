@@ -8,7 +8,10 @@ export default function HowToUse() {
         <p className="title-20 text-gray-800 mb-10">
           노티코어를 제대로 활용하는 방법, 지금 가이드에서 확인하세요
         </p>
-        <Button variant={"black"} className="w-39 h-12 rounded-[12px]">
+        <Button
+          variant={"black"}
+          className="w-39 h-12 rounded-[12px] body-18_SB"
+        >
           다운로드
         </Button>
       </section>

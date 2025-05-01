@@ -34,7 +34,7 @@ export default function SidebarItem({
               : "text-gray-500 group-hover:text-primary transition-all"
           )}
         >
-          {icon}
+          <div className="size-5">{icon}</div>
         </div>
         {label}
       </Link>

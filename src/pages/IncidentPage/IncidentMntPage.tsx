@@ -7,7 +7,7 @@ export default function IncidentMntPage() {
   const [showActive, setShowActive] = useState(true);
 
   return (
-    <div>
+    <div className="flex flex-col w-full min-w-md justify-self-center gap-[26px] mt-[26px]">
       <h1>홈 {`>`} 장애관리</h1>
       <div>
         <ToggleSelect

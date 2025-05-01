@@ -21,6 +21,10 @@ import {
   TooltipTrigger,
 } from "@shared/components/ui/tooltip";
 
+import { toast } from "sonner";
+import { useState } from "react";
+import { cn } from "@/shared/lib/utils";
+
 const groups = [
   {
     id: 1,
@@ -74,6 +78,25 @@ const groups = [
 ];
 
 export default function IncidentRegisterPage() {
+  // 복사 버튼 선택시 상태 관리
+  const [isRecipientClicked, setIsRecipientClicked] = useState<boolean>(false); // 수신자 섹션
+  const [isSubjectClicked, setIsSubjectClicked] = useState<boolean>(false); // 제목 섹션
+  const [isBodyClicked, setIsBodyClicked] = useState<boolean>(false); // 내용 섹션
+
+  // 복사하기 버튼 눌렀을 때 실행할 함수
+  const onRecipientClick = () => {
+    toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");
+    setIsRecipientClicked(true);
+  };
+  const onSubjectClick = () => {
+    toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");
+    setIsSubjectClicked(true);
+  };
+  const onBodyClick = () => {
+    toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");
+    setIsBodyClicked(true);
+  };
+
   return (
     <main className="flex flex-col items-center w-full border-l border-gray-400 h-screen px-[42px]">
       {/* Breadcrumb */}
@@ -152,58 +175,131 @@ export default function IncidentRegisterPage() {
             </div>
 
             <div className="space-y-[10px]">
-              <article className="h-13 bg-white rounded-[12px] flex items-center px-6 py-[14px] border-gray-400">
-                <p className="body-16_SB text-gray-700 mr-[10px]">받는 사람</p>
-                <p className="body-13 text-gray-600">abc@gmail.com</p>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger className="ml-auto ">
-                      <PasteIcon className="text-gray-600 size-6 cursor-pointer" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>복사하기</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+              <article
+                className={cn(
+                  "h-13 rounded-[12px] border-gray-400",
+                  isRecipientClicked
+                    ? "bg-tertiary shadow-template-hover"
+                    : "bg-white"
+                )}
+                onClick={onRecipientClick}
+              >
+                <Tooltip>
+                  <TooltipTrigger className="flex w-full items-center px-6 py-[14px] cursor-pointer">
+                    <p
+                      className={cn(
+                        "body-16_SB mr-[10px]",
+                        isRecipientClicked ? "text-primary" : "text-gray-700"
+                      )}
+                    >
+                      받는 사람
+                    </p>
+                    <p
+                      className={cn(
+                        "body-13",
+                        isRecipientClicked ? "text-primary" : "text-gray-600"
+                      )}
+                    >
+                      noticore@noticore.co.kr
+                    </p>
+                    <PasteIcon
+                      className={cn(
+                        "size-6 cursor-pointer ml-auto",
+                        isRecipientClicked ? "text-primary" : "text-gray-600"
+                      )}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>복사하기</p>
+                  </TooltipContent>
+                </Tooltip>
               </article>
 
-              <article className="h-13 bg-white rounded-[12px] flex px-6 py-[14px] border-gray-400 items-center">
-                <p className="body-16_SB text-gray-700 mr-[10px]">제목</p>
-                <p className="body-13 text-gray-600">
-                  503 Service Unavailable 문구 출력 오류
-                </p>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger className="ml-auto ">
-                      <PasteIcon className="text-gray-600 size-6 cursor-pointer" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>복사하기</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+              <article
+                className={cn(
+                  "h-13 rounded-[12px] border-gray-400",
+                  isSubjectClicked
+                    ? "bg-tertiary shadow-template-hover"
+                    : "bg-white"
+                )}
+                onClick={onSubjectClick}
+              >
+                <Tooltip>
+                  <TooltipTrigger className="flex w-full items-center px-6 py-[14px] cursor-pointer">
+                    <p
+                      className={cn(
+                        "body-16_SB mr-[10px]",
+                        isSubjectClicked ? "text-primary" : "text-gray-700"
+                      )}
+                    >
+                      제목
+                    </p>
+                    <p
+                      className={cn(
+                        "body-13",
+                        isSubjectClicked ? "text-primary" : "text-gray-600"
+                      )}
+                    >
+                      503 Service Unavailable 문구 출력 오류
+                    </p>
+                    <PasteIcon
+                      className={cn(
+                        "size-6 cursor-pointer ml-auto",
+                        isSubjectClicked ? "text-primary" : "text-gray-600"
+                      )}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>복사하기</p>
+                  </TooltipContent>
+                </Tooltip>
               </article>
 
-              <article className="pb-[62px] bg-white rounded-[12px] flex flex-col px-6 py-[14px] border-gray-400">
-                <div className="flex items-center mb-[22px]">
-                  <p className="body-16_SB text-gray-700">내용</p>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger className="ml-auto ">
-                        <PasteIcon className="text-gray-600 size-6 cursor-pointer" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>복사하기</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
-                <div className="body-13 text-gray-800 space-y-[22px] px-3">
-                  <p>1. 장애 발생 시간 :</p>
-                  <p>2. 장애 확인 경로 :</p>
-                  <p>3. 장애 증상 :</p>
-                  <p>4. 영향 범위 :</p>
-                </div>
+              <article
+                className={cn(
+                  "rounded-[12px] border-gray-400",
+                  isBodyClicked
+                    ? "bg-tertiary shadow-template-hover"
+                    : "bg-white"
+                )}
+                onClick={onBodyClick}
+              >
+                <Tooltip>
+                  <TooltipTrigger className="w-full cursor-pointer">
+                    <article className="rounded-[12px] flex flex-col px-6 pt-[14px] pb-[62px]">
+                      <div className="flex items-center mb-[22px]">
+                        <p
+                          className={cn(
+                            "body-16_SB",
+                            isBodyClicked ? "text-primary" : "text-gray-700"
+                          )}
+                        >
+                          내용
+                        </p>
+                        <PasteIcon
+                          className={cn(
+                            "size-6 ml-auto",
+                            isBodyClicked ? "text-primary" : "text-gray-600"
+                          )}
+                        />
+                      </div>
+                      <div
+                        className={cn(
+                          "body-13 space-y-[22px] px-3 text-start",
+                          isBodyClicked ? "text-primary" : "text-gray-800"
+                        )}
+                      >
+                        <p>1. 장애 발생 시간 :</p>
+                        <p>2. 장애 확인 경로 :</p>
+                        <p>3. 장애 증상 :</p>
+                        <p>4. 영향 범위 :</p>
+                      </div>
+                    </article>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>복사하기</p>
+                  </TooltipContent>
+                </Tooltip>
               </article>
             </div>
           </section>

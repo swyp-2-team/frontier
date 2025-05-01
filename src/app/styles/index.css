@@ -82,6 +82,10 @@
     inset 1px 2px 4px 0 rgba(255, 255, 255, 0.1),
     inset -6px -6px 20px 0 rgba(237, 138, 48, 0.2),
     inset 4px 4px 4px 0 rgba(255, 241, 228, 1);
+  --shadow-template-hover: inset 2px 2px 1px 0px rgba(237, 138, 48, 0.4),
+    inset 1px 1px 4px 0px rgba(0, 0, 0, 0.07),
+    inset 2px 2px 8px 0px rgba(255, 239, 224, 1),
+    inset -1px -1px 4px 0px rgba(255, 251, 251, 0.25);
 
   /* 반응형 중단점 */
   --breakpoint-sm: 40rem;

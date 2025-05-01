@@ -141,7 +141,7 @@ export default function IncidentRegisterPage() {
 
             <Accordion
               type="multiple"
-              className="bg-white text-black rounded-[12px] border-gray-300 body-16"
+              className="bg-white text-black rounded-[12px] border-gray-300 body-16 overflow-hidden"
             >
               {groups.map((group) => (
                 <AccordionItem
@@ -149,7 +149,7 @@ export default function IncidentRegisterPage() {
                   value={group.groupName}
                   className="hover:bg-tertiary"
                 >
-                  <AccordionTrigger className="px-4 first:rounded-tl-[12px] first:rounded-tr-[12px] rounded-bl-none rounded-br-none">
+                  <AccordionTrigger className="px-4 rounded-none [&[data-state=open]]:bg-primary [&[data-state=open]]:text-white">
                     {group.groupName}
                   </AccordionTrigger>
                   <AccordionContent className="bg-gray-100 px-4 py-[30px] flex justify-center gap-4 flex-wrap">

@@ -33,10 +33,8 @@ export default function ToggleSelect({
 
   return (
     <div className="flex justify-self-center w-full max-w-md bg-gray-300 p-1 rounded-2xl mb-10 gap-[3px]">
-      {tabs.map((tab, index) => {
+      {tabs.map((tab) => {
         const isActive = currentActiveTab === tab.value;
-        const isFirst = index === 0;
-        const isLast = index === tabs.length - 1;
 
         return (
           <button
@@ -48,8 +46,6 @@ export default function ToggleSelect({
                   ? "bg-white body-18_SB text-black shadow-[4px_4px_4px_0px_rgba(0,0,0,0.10)]"
                   : "body-18 text-gray-500"
               }
-              ${isFirst ? "rounded-l-xl" : ""}
-              ${isLast ? "rounded-r-xl" : ""}
             `}
           >
             {tab.label}

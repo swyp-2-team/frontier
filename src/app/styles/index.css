@@ -86,6 +86,8 @@
     inset 1px 1px 4px 0px rgba(0, 0, 0, 0.07),
     inset 2px 2px 8px 0px rgba(255, 239, 224, 1),
     inset -1px -1px 4px 0px rgba(255, 251, 251, 0.25);
+  --shadow-warning: inset -2px -2px 0 #bf1717ff, inset 4px 4px 0 #ff9494ff;
+  --shadow-success: inset -2px -2px 0 #047232ff, inset 4px 4px 0 #4fe68fe0;
 
   /* 반응형 중단점 */
   --breakpoint-sm: 40rem;
@@ -261,6 +263,12 @@
   font-size: 18px;
   font-weight: 600;
   line-height: 28px;
+}
+
+@utility body-18_LH32 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 32px;
 }
 
 @utility body-16_SB {

@@ -106,7 +106,12 @@ export default function IncidentRegisterPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href="/incident-register">장애등록</BreadcrumbLink>
+            <BreadcrumbLink
+              href="/incident-register"
+              className="body-13_SB text-black"
+            >
+              장애등록
+            </BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

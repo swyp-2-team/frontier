@@ -75,6 +75,9 @@ export default function IncidentRegisterPage() {
   const [isSubjectClicked, setIsSubjectClicked] = useState<boolean>(false); // 제목 섹션
   const [isBodyClicked, setIsBodyClicked] = useState<boolean>(false); // 내용 섹션
 
+  // 선택된 수신 그룹 상태 관리
+  const [selectedGroups, setSelectedGroups] = useState<Array<string>>([]);
+
   // 복사하기 버튼 눌렀을 때 실행할 함수
   const onRecipientClick = () => {
     toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");
@@ -135,6 +138,7 @@ export default function IncidentRegisterPage() {
             <Accordion
               type="multiple"
               className="bg-white text-black rounded-[12px] border-gray-300 body-16 overflow-hidden"
+              onValueChange={setSelectedGroups}
             >
               {groups.map((group) => (
                 <AccordionItem
@@ -180,7 +184,7 @@ export default function IncidentRegisterPage() {
               />
               <TemplateCopyCard
                 copyTitle="제목"
-                copySubtitle="[Group_1] 503 Service Unavailable 문구 출력 오류"
+                selectedGroups={selectedGroups}
                 clickState={isSubjectClicked}
                 onClick={onSubjectClick}
               />

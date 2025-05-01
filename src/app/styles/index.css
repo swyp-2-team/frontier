@@ -82,6 +82,12 @@
     inset 1px 2px 4px 0 rgba(255, 255, 255, 0.1),
     inset -6px -6px 20px 0 rgba(237, 138, 48, 0.2),
     inset 4px 4px 4px 0 rgba(255, 241, 228, 1);
+  --shadow-template-hover: inset 2px 2px 1px 0px rgba(237, 138, 48, 0.4),
+    inset 1px 1px 4px 0px rgba(0, 0, 0, 0.07),
+    inset 2px 2px 8px 0px rgba(255, 239, 224, 1),
+    inset -1px -1px 4px 0px rgba(255, 251, 251, 0.25);
+  --shadow-warning: inset -2px -2px 0 #bf1717ff, inset 4px 4px 0 #ff9494ff;
+  --shadow-success: inset -2px -2px 0 #047232ff, inset 4px 4px 0 #4fe68fe0;
 
   /* 반응형 중단점 */
   --breakpoint-sm: 40rem;
@@ -200,9 +206,8 @@
   * {
     @apply border-border;
   }
-  body {
-    /* font가 적용이 안 되어서 전체 페이지에 적용되도록 수정함 */
-    @apply bg-background text-foreground font-['Noto_Sans'];
+  html {
+    @apply font-sans;
   }
 }
 
@@ -260,6 +265,12 @@
   line-height: 28px;
 }
 
+@utility body-18_LH32 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
 @utility body-16_SB {
   font-size: 16px;
   font-weight: 600;
@@ -287,5 +298,11 @@
 @utility body-13 {
   font-size: 13px;
   font-weight: 500;
+  line-height: 18px;
+}
+
+@utility body-13_SB {
+  font-size: 13px;
+  font-weight: 600;
   line-height: 18px;
 }

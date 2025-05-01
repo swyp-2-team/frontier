@@ -8,6 +8,7 @@ const DUMMY_INCIDENT_LIST = [
     title: "503 Service Unavailable 문구 출력 오류",
     confirmed: 4,
     total: 12,
+    isActive: true,
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ const DUMMY_INCIDENT_LIST = [
     title: "503 Service Unavailable 문구 출력 오류",
     confirmed: 6,
     total: 12,
+    isActive: true,
   },
   {
     id: 3,
@@ -24,14 +26,18 @@ const DUMMY_INCIDENT_LIST = [
     title: "503 Service Unavailable 문구 출력 오류",
     confirmed: 12,
     total: 12,
+    isActive: false,
   },
 ];
 
-export default function IncidentList() {
-  // 동적으로 IncidentCard 렌더링
+export default function IncidentList({ showActive }: { showActive: boolean }) {
+  const incidents = showActive
+    ? DUMMY_INCIDENT_LIST.filter((item) => item.isActive)
+    : DUMMY_INCIDENT_LIST.filter((item) => !item.isActive); // 히스토리만 표시하도록 변경
+
   return (
     <section className="flex flex-col gap-[26px]">
-      {DUMMY_INCIDENT_LIST.map((item) => (
+      {incidents.map((item) => (
         <IncidentCard
           key={item.id}
           groupName={item.groupName}
@@ -39,6 +45,7 @@ export default function IncidentList() {
           title={item.title}
           confirmed={item.confirmed}
           total={item.total}
+          isActive={item.isActive} // 각 항목의 원래 isActive 값을 전달
         />
       ))}
     </section>

@@ -7,6 +7,7 @@ interface IncidentCardProps {
   title: string;
   confirmed: number;
   total: number;
+  isActive?: boolean; // 진행 중인 장애인지 여부를 나타내는 속성 추가
 }
 
 export default function IncidentCard({
@@ -15,11 +16,13 @@ export default function IncidentCard({
   title,
   confirmed,
   total,
+  isActive = true, // 기본값은 진행 중인 장애
 }: IncidentCardProps) {
   return (
     <article className="bg-white rounded-[12px] py-7 px-22 flex items-center">
       <section className="flex items-start gap-20 border-r-2 border-gray-300 pr-18 pt-[30px] pb-9">
-        <Badge>{groupName}</Badge>
+        {/* isActive 속성에 따라 배지 변형 결정 */}
+        <Badge variant={isActive ? "default" : "tertiary"}>{groupName}</Badge>
         <div className="min-w-[210px]">
           <p className="title-20_SB text-gray-600 mb-3">등록시간</p>
           <p className="title-24 text-gray-700">{time}</p>

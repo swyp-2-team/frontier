@@ -11,6 +11,8 @@ const badgeVariants = cva(
       variant: {
         default:
           "bg-secondary text-gray-800 px-3 py-[5px] rounded-[10px] title-20 shadow-step",
+        tertiary:
+          "bg-tertiary text-gray-800 px-3 py-[5px] rounded-[10px] title-20 shadow-step",
       },
     },
     defaultVariants: {

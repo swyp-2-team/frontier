@@ -12,17 +12,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@shared/components/ui/accordion";
-import PasteIcon from "@/assets/icons/paste.svg?react";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@shared/components/ui/tooltip";
-
-import { toast } from "sonner";
 import { useState } from "react";
-import { cn } from "@/shared/lib/utils";
+import { toast } from "sonner";
+import TemplateCopyCard from "@/features/incident/ui/TemplateCopyCard";
 
 const groups = [
   {
@@ -179,132 +172,25 @@ export default function IncidentRegisterPage() {
             </div>
 
             <div className="space-y-[10px]">
-              <article
-                className={cn(
-                  "h-13 rounded-[12px] border-gray-400",
-                  isRecipientClicked
-                    ? "bg-tertiary shadow-template-hover"
-                    : "bg-white"
-                )}
+              <TemplateCopyCard
+                copyTitle="받는 사람"
+                copySubtitle="noti-core@noticore.co.kr"
+                clickState={isRecipientClicked}
                 onClick={onRecipientClick}
-              >
-                <Tooltip>
-                  <TooltipTrigger className="flex w-full items-center px-6 py-[14px] cursor-pointer">
-                    <p
-                      className={cn(
-                        "body-16_SB mr-[10px]",
-                        isRecipientClicked ? "text-primary" : "text-gray-700"
-                      )}
-                    >
-                      받는 사람
-                    </p>
-                    <p
-                      className={cn(
-                        "body-13",
-                        isRecipientClicked ? "text-primary" : "text-gray-600"
-                      )}
-                    >
-                      noticore@noticore.co.kr
-                    </p>
-                    <PasteIcon
-                      className={cn(
-                        "size-6 cursor-pointer ml-auto",
-                        isRecipientClicked ? "text-primary" : "text-gray-600"
-                      )}
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>복사하기</p>
-                  </TooltipContent>
-                </Tooltip>
-              </article>
-
-              <article
-                className={cn(
-                  "h-13 rounded-[12px] border-gray-400",
-                  isSubjectClicked
-                    ? "bg-tertiary shadow-template-hover"
-                    : "bg-white"
-                )}
+              />
+              <TemplateCopyCard
+                copyTitle="제목"
+                copySubtitle="[Group_1] 503 Service Unavailable 문구 출력 오류"
+                clickState={isSubjectClicked}
                 onClick={onSubjectClick}
-              >
-                <Tooltip>
-                  <TooltipTrigger className="flex w-full items-center px-6 py-[14px] cursor-pointer">
-                    <p
-                      className={cn(
-                        "body-16_SB mr-[10px]",
-                        isSubjectClicked ? "text-primary" : "text-gray-700"
-                      )}
-                    >
-                      제목
-                    </p>
-                    <p
-                      className={cn(
-                        "body-13",
-                        isSubjectClicked ? "text-primary" : "text-gray-600"
-                      )}
-                    >
-                      503 Service Unavailable 문구 출력 오류
-                    </p>
-                    <PasteIcon
-                      className={cn(
-                        "size-6 cursor-pointer ml-auto",
-                        isSubjectClicked ? "text-primary" : "text-gray-600"
-                      )}
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>복사하기</p>
-                  </TooltipContent>
-                </Tooltip>
-              </article>
+              />
 
-              <article
-                className={cn(
-                  "rounded-[12px] border-gray-400",
-                  isBodyClicked
-                    ? "bg-tertiary shadow-template-hover"
-                    : "bg-white"
-                )}
+              <TemplateCopyCard
+                copyTitle="내용"
+                copyContent={true}
+                clickState={isBodyClicked}
                 onClick={onBodyClick}
-              >
-                <Tooltip>
-                  <TooltipTrigger className="w-full cursor-pointer">
-                    <article className="rounded-[12px] flex flex-col px-6 pt-[14px] pb-[62px]">
-                      <div className="flex items-center mb-[22px]">
-                        <p
-                          className={cn(
-                            "body-16_SB",
-                            isBodyClicked ? "text-primary" : "text-gray-700"
-                          )}
-                        >
-                          내용
-                        </p>
-                        <PasteIcon
-                          className={cn(
-                            "size-6 ml-auto",
-                            isBodyClicked ? "text-primary" : "text-gray-600"
-                          )}
-                        />
-                      </div>
-                      <div
-                        className={cn(
-                          "body-13 space-y-[22px] px-3 text-start",
-                          isBodyClicked ? "text-primary" : "text-gray-800"
-                        )}
-                      >
-                        <p>1. 장애 발생 시간 :</p>
-                        <p>2. 장애 확인 경로 :</p>
-                        <p>3. 장애 증상 :</p>
-                        <p>4. 영향 범위 :</p>
-                      </div>
-                    </article>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>복사하기</p>
-                  </TooltipContent>
-                </Tooltip>
-              </article>
+              />
             </div>
           </section>
         </section>

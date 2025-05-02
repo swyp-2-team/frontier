@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
 import OutIcon from "@/assets/icons/out.svg?react";
@@ -96,6 +96,7 @@ const COMMENTS_MOCKUP: Comment[] = [
 ];
 
 export default function IncidentMntDetailPage() {
+  const navigate = useNavigate(); // 네비게이션 훅 추가
   const { incidentId } = useParams<{ incidentId: string }>();
   const [dividerHeight, setDividerHeight] = useState(0);
   const [incidentDetail, setIncidentDetail] = useState<IncidentDetail | null>(
@@ -145,6 +146,10 @@ export default function IncidentMntDetailPage() {
     };
   }, [confirmedUsers.length, unconfirmedUsers.length]);
 
+  const handleGoBack = () => {
+    navigate(-1); // 이전 페이지로 이동
+  };
+
   const handleAddComment = (content: string) => {
     const newComment: Comment = {
       id: Date.now(),
@@ -172,7 +177,7 @@ export default function IncidentMntDetailPage() {
 
   return (
     <div className="p-6 w-full">
-      <button>
+      <button onClick={handleGoBack} className="flex justify-self-end mb-4">
         <OutIcon className={cn("w-8 h-8")} />
       </button>
       <div className="flex justify-between gap-10 mb-4">

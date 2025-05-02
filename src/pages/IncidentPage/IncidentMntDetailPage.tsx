@@ -205,7 +205,7 @@ export default function IncidentMntDetailPage() {
       <div className="flex flex-row gap-10 my-4">
         {/* 왼쪽 - 템플릿 내용 */}
         <div className="flex-2">
-          <div className="title-18_SB text-gray-600 mb-2">템플릿 내용</div>
+          <div className="title-18_SB text-gray-600 mb-3">템플릿 내용</div>
           <div className="py-10 pl-12 pr-14 bg-white rounded-xl gap-6 h-[411px] overflow-y-scroll">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4">

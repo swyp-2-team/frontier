@@ -2,8 +2,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
 import OutIcon from "@/assets/icons/out.svg?react";
-import { cn } from "@/shared/lib/utils";
 import CommentSection, { Comment } from "@/features/incident/ui/CommentSection";
+import { cn } from "@/shared/lib/utils";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@shared/components/ui/breadcrumb";
 
 // 템플릿 내용용 타입 정의
 interface TemplateContent {
@@ -176,32 +183,60 @@ export default function IncidentMntDetailPage() {
   }
 
   return (
-    <div className="p-6 w-full">
-      <button onClick={handleGoBack} className="flex justify-self-end mb-4">
-        <OutIcon className={cn("w-8 h-8")} />
-      </button>
-      <div className="flex justify-between gap-10 mb-4">
-        <div className="flex flex-col mb-2 gap-2.5">
-          <div className="self-stretch justify-start title-20_SB text-gray-600">
-            제목
+    <div className="px-6 w-full border-l border-gray-400 h-screen overflow-y-auto">
+      <div className="flex flex-row justify-between items-center mb-4">
+        <Breadcrumb className="self-start mb-[38px]">
+          <BreadcrumbList className="body-13 text-gray-800">
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/home">홈</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                href="/incident-register"
+                className="body-13 text-gray-800"
+              >
+                장애관리
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                href="/:incidentId"
+                className="body-13_SB text-black"
+              >
+                상세보기
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <button onClick={handleGoBack} className="flex justify-self-end mb-4">
+          <OutIcon className={cn("w-8 h-8")} />
+        </button>
+      </div>
+      <div className="flex justify-between mb-4">
+        <div className="flex gap-25">
+          <div className="flex flex-col justify-between mb-2 gap-2.5">
+            <div className="self-stretch justify-start title-20_SB text-gray-600">
+              제목
+            </div>
+            <div className="title-24_SB text-gray-800">
+              {incidentDetail?.title}
+            </div>
           </div>
-          <div className="title-24_SB text-gray-800">
-            {incidentDetail?.title}
+          <div className="flex flex-col justify-start items-start gap-2.5 title-20_SB text-gray-600 pl-8 border-l-2 border-gray-400">
+            전파 시간
+            <span className="title-18 text-gray-800">
+              {incidentDetail?.propagationTime}
+            </span>
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2.5 title-20_SB text-gray-600 pl-8 border-l-2 border-gray-400">
+            진행 상태
+            <span className="title-18 text-primary">
+              {status === "completed" ? "처리완료" : "진행중"}
+            </span>
           </div>
         </div>
-        <div className="flex flex-col justify-start items-start gap-2.5 title-20_SB text-gray-600 pl-8 border-l-2 border-gray-400">
-          전파 시간
-          <span className="title-18 text-gray-800">
-            {incidentDetail?.propagationTime}
-          </span>
-        </div>
-        <div className="flex flex-col justify-start items-start gap-2.5 title-20_SB text-gray-600 pl-8 border-l-2 border-gray-400">
-          진행 상태
-          <span className="title-18 text-primary">
-            {status === "completed" ? "처리완료" : "진행중"}
-          </span>
-        </div>
-
         <button
           onClick={toggleStatus}
           className={`text-white w-[156px] h-[48px] rounded-xl my-3 ${
@@ -217,14 +252,14 @@ export default function IncidentMntDetailPage() {
         {/* 왼쪽 - 템플릿 내용 */}
         <div className="flex-2">
           <div className="title-18_SB text-gray-600 mb-3">템플릿 내용</div>
-          <div className="py-10 pl-12 pr-14 bg-white rounded-xl gap-6 h-[411px] overflow-y-scroll">
+          <div className="py-8 pl-12 pr-14 bg-white rounded-xl h-9/10 overflow-y-auto">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4">
                 <div className="flex">
                   <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
                     1. 장애 발생 시간 :{" "}
                   </span>
-                  <span className="text-gray-600 break-words whitespace-pre-wrap grow max-w-full">
+                  <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
                     {incidentDetail.templateContent.incidentTime}
                   </span>
                 </div>
@@ -234,7 +269,7 @@ export default function IncidentMntDetailPage() {
                   <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
                     2. 장애 확인 경로 :{" "}
                   </span>
-                  <span className="text-gray-600 break-words whitespace-pre-wrap grow max-w-full">
+                  <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
                     {incidentDetail.templateContent.detectionPath}
                   </span>
                 </div>
@@ -244,7 +279,7 @@ export default function IncidentMntDetailPage() {
                   <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
                     3. 장애 증상 :{" "}
                   </span>
-                  <span className="text-gray-600 break-words whitespace-pre-wrap grow max-w-full">
+                  <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
                     {incidentDetail.templateContent.symptoms}
                   </span>
                 </div>
@@ -254,7 +289,7 @@ export default function IncidentMntDetailPage() {
                   <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
                     4. 영향 범위 :
                   </span>
-                  <span className="text-gray-600 break-words whitespace-pre-wrap grow max-w-full">
+                  <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
                     {incidentDetail.templateContent.impact}
                   </span>
                 </div>
@@ -272,7 +307,7 @@ export default function IncidentMntDetailPage() {
               {CHECK_LIST_MOCKUP.length}
             </span>
           </div>
-          <div className="py-8 px-8 bg-white rounded-xl h-[411px] overflow-y-auto">
+          <div className="py-8 px-8 bg-white rounded-xl h-9/10 overflow-y-auto">
             <div className="flex flex-row gap-12 relative">
               {/* 확인 컬럼 */}
               <div className="flex-1 justify-items-center">

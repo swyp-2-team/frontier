@@ -1,5 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
+
+import OutIcon from "@/assets/icons/out.svg?react";
+import { cn } from "@/shared/lib/utils";
 import CommentSection, { Comment } from "@/features/incident/ui/CommentSection";
 
 // 템플릿 내용용 타입 정의
@@ -169,6 +172,9 @@ export default function IncidentMntDetailPage() {
 
   return (
     <div className="p-6 w-full">
+      <button>
+        <OutIcon className={cn("w-8 h-8")} />
+      </button>
       <div className="flex justify-between gap-10 mb-4">
         <div className="flex flex-col mb-2 gap-2.5">
           <div className="self-stretch justify-start title-20_SB text-gray-600">

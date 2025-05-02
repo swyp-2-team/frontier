@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import IncidentCard from "@/features/incident/ui/IncidentCard";
 
 const DUMMY_INCIDENT_LIST = [
@@ -41,23 +43,25 @@ export default function IncidentList({
 
   return (
     <section className="flex flex-col gap-[26px]">
-      {incidents.map((item) => (
-        <IncidentCard
-          key={item.id}
-          groupName={item.groupName}
-          time={item.time}
-          title={item.title}
-          confirmed={item.confirmed}
-          total={item.total}
-          isActive={item.isActive} // 각 항목의 원래 isActive 값을 전달
-        />
-      ))}
-      {incidents.length === 0 && (
+      {incidents.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
           {showActive
             ? "현재 진행 중인 장애가 없습니다."
             : "장애 히스토리가 없습니다."}
         </div>
+      ) : (
+        incidents.map((item) => (
+          <Link key={item.id} to={`/incident-mnt/${item.id}`}>
+            <IncidentCard
+              groupName={item.groupName}
+              time={item.time}
+              title={item.title}
+              confirmed={item.confirmed}
+              total={item.total}
+              isActive={item.isActive}
+            />
+          </Link>
+        ))
       )}
     </section>
   );

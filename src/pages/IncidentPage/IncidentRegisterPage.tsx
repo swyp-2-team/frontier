@@ -16,6 +16,7 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 import TemplateCopyCard from "@/features/incident/ui/TemplateCopyCard";
+import { Link } from "react-router-dom";
 
 const groups = [
   {
@@ -98,15 +99,14 @@ export default function IncidentRegisterPage() {
       <Breadcrumb className="self-start mb-[38px]">
         <BreadcrumbList className="body-13 text-gray-800">
           <BreadcrumbItem>
-            <BreadcrumbLink href="/home">홈</BreadcrumbLink>
+            <BreadcrumbLink asChild>
+              <Link to="/home">홈</Link>
+            </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink
-              href="/incident-register"
-              className="body-13_SB text-black"
-            >
-              장애등록
+            <BreadcrumbLink asChild className="body-13_SB text-black">
+              <Link to="/incident-register">장애등록</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>

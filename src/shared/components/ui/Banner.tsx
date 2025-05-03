@@ -14,7 +14,7 @@ export default function Banner() {
         <Button
           asChild
           variant={"basic"}
-          className="bg-white text-black body-16_SB 2xl:body-18_SB w-30 2xl:w-39 h-9 2xl:h-12 rounded-[8px] 2xl:rounded-[12px] hover:bg-primary hover:text-white active:bg-white active:text-primary"
+          className="bg-white text-black body-16_SB 2xl:body-18_SB hover:bg-primary hover:text-white active:bg-white active:text-primary"
         >
           <Link to={"/incident-register"}>장애등록</Link>
         </Button>

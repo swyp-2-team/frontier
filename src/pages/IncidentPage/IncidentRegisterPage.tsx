@@ -93,7 +93,7 @@ export default function IncidentRegisterPage() {
   };
 
   return (
-    <main className="flex flex-col items-center w-full border-l border-gray-400 px-[42px]">
+    <main className="flex flex-col items-center w-full px-[42px]">
       {/* Breadcrumb */}
       <Breadcrumb className="self-start mb-[38px]">
         <BreadcrumbList className="body-13 text-gray-800">

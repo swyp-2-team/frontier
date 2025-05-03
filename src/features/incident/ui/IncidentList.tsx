@@ -42,7 +42,7 @@ export default function IncidentList({
     : DUMMY_INCIDENT_LIST.filter((item) => !item.isActive); // 히스토리만 표시하도록 변경
 
   return (
-    <section className="flex flex-col gap-[26px]">
+    <section className="flex flex-col gap-[18px] 2xl:gap-[26px]">
       {incidents.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
           {showActive

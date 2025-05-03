@@ -76,7 +76,7 @@ export default function IncidentRegisterPage() {
   const [isBodyClicked, setIsBodyClicked] = useState<boolean>(false); // 내용 섹션
 
   // 선택된 수신 그룹 상태 관리
-  const [selectedGroups, setSelectedGroups] = useState<Array<string>>([]);
+  const [selectedGroup, setSelectedGroup] = useState<string>("");
 
   // 복사하기 버튼 눌렀을 때 실행할 함수
   const onRecipientClick = () => {
@@ -93,7 +93,7 @@ export default function IncidentRegisterPage() {
   };
 
   return (
-    <main className="flex flex-col items-center w-full border-l border-gray-400 h-screen px-[42px]">
+    <main className="flex flex-col items-center w-full border-l border-gray-400 px-[42px]">
       {/* Breadcrumb */}
       <Breadcrumb className="self-start mb-[38px]">
         <BreadcrumbList className="body-13 text-gray-800">
@@ -114,7 +114,7 @@ export default function IncidentRegisterPage() {
 
       {/* Step 표시 */}
       <div className="w-full px-[138px]">
-        <div className="h-[70px] bg-[url('/images/step_arrow.png')] bg-[length:100%_100%] bg-center bg-no-repeat flex justify-around items-center body-18 mb-10">
+        <div className="h-15 2xl:h-[70px] bg-[url('/images/step_arrow.png')] bg-[length:100%_100%] bg-center bg-no-repeat flex justify-around items-center body-18 mb-10">
           <span>Step.1</span>
           <span>Step.2</span>
         </div>
@@ -136,9 +136,10 @@ export default function IncidentRegisterPage() {
             </div>
 
             <Accordion
-              type="multiple"
+              type="single"
               className="bg-white text-black rounded-[12px] border-gray-300 body-16 overflow-hidden"
-              onValueChange={setSelectedGroups}
+              onValueChange={setSelectedGroup}
+              collapsible
             >
               {groups.map((group) => (
                 <AccordionItem
@@ -178,13 +179,13 @@ export default function IncidentRegisterPage() {
             <div className="space-y-[10px]">
               <TemplateCopyCard
                 copyTitle="받는 사람"
-                copySubtitle="noti-core@noticore.co.kr"
+                copySubtitle="noticore@noticore.co.kr"
                 clickState={isRecipientClicked}
                 onClick={onRecipientClick}
               />
               <TemplateCopyCard
                 copyTitle="제목"
-                selectedGroups={selectedGroups}
+                selectedGroup={selectedGroup}
                 clickState={isSubjectClicked}
                 onClick={onSubjectClick}
               />

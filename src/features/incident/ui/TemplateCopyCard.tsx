@@ -10,7 +10,7 @@ interface TemplateCopyCardProps {
   copyTitle: string;
   copySubtitle?: string;
   copyContent?: boolean;
-  selectedGroups?: Array<string>;
+  selectedGroup?: string;
   clickState: boolean;
   onClick: () => void;
 }
@@ -19,7 +19,7 @@ export default function TemplateCopyCard({
   copyTitle,
   copySubtitle,
   copyContent,
-  selectedGroups,
+  selectedGroup,
   clickState,
   onClick,
 }: TemplateCopyCardProps) {
@@ -53,14 +53,14 @@ export default function TemplateCopyCard({
                 {copySubtitle}
               </p>
             )}
-            {selectedGroups && (
+            {selectedGroup && (
               <p
                 className={cn(
                   "body-13",
                   clickState ? "text-primary" : "text-gray-600"
                 )}
               >
-                {selectedGroups.join(", ")}
+                {selectedGroup}
               </p>
             )}
 

@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
 import OutIcon from "@/assets/icons/out.svg?react";
@@ -188,24 +188,20 @@ export default function IncidentMntDetailPage() {
         <Breadcrumb className="self-start mb-[38px]">
           <BreadcrumbList className="body-13 text-gray-800">
             <BreadcrumbItem>
-              <BreadcrumbLink href="/home">홈</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink
-                href="/incident-register"
-                className="body-13 text-gray-800"
-              >
-                장애관리
+              <BreadcrumbLink asChild>
+                <Link to="/home">홈</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink
-                href="/:incidentId"
-                className="body-13_SB text-black"
-              >
-                상세보기
+              <BreadcrumbLink asChild className="body-13 text-gray-800">
+                <Link to="/incident-mnt">장애관리</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild className="body-13_SB text-black">
+                <Link to={`/incident-mnt/${incidentId}`}>장애 상세</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>

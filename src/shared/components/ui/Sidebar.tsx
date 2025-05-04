@@ -27,7 +27,7 @@ export default function Sidebar() {
         <SidebarItem
           icon={<DataIcon className="size-full" />}
           label="장애관리"
-          active={currentPath === "/incident-mnt"}
+          active={currentPath.startsWith("/incident-mnt")}
           href="/incident-mnt"
         />
         <SidebarItem

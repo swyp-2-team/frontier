@@ -183,7 +183,7 @@ export default function IncidentMntDetailPage() {
   }
 
   return (
-    <div className="px-6 w-full border-l border-gray-400 h-screen overflow-y-auto">
+    <div className="px-6 w-full border-l border-gray-400">
       <div className="flex flex-row justify-between items-center mb-4">
         <Breadcrumb className="self-start mb-[38px]">
           <BreadcrumbList className="body-13 text-gray-800">
@@ -212,13 +212,11 @@ export default function IncidentMntDetailPage() {
       </div>
       <div className="flex justify-between mb-4">
         <div className="flex gap-25">
-          <div className="flex flex-col justify-between mb-2 gap-2.5">
-            <div className="self-stretch justify-start title-20_SB text-gray-600">
-              제목
-            </div>
-            <div className="title-24_SB text-gray-800">
+          <div className="flex flex-col justify-start items-start mb-2 gap-2.5 title-20_SB text-gray-600">
+            제목
+            <span className="title-24_SB text-gray-800">
               {incidentDetail?.title}
-            </div>
+            </span>
           </div>
           <div className="flex flex-col justify-start items-start gap-2.5 title-20_SB text-gray-600 pl-8 border-l-2 border-gray-400">
             전파 시간

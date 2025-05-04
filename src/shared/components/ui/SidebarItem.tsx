@@ -1,4 +1,3 @@
-import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 import { Link } from "react-router-dom";
 
@@ -16,28 +15,23 @@ export default function SidebarItem({
   href,
 }: SidebarItemProps) {
   return (
-    <Button
-      asChild
-      variant={"basic"}
+    <Link
+      to={href}
       className={cn(
-        "w-[200px] h-[60px] rounded-[12px] body-18 text-gray-700 px-3 justify-normal group",
+        "w-full h-12 2xl:h-15 rounded-[8px] 2xl:rounded-[12px] body-16 2xl:body-18 text-gray-700 px-3 justify-normal group flex gap-2 items-center",
         active
-          ? "body-18_SB bg-secondary text-primary shadow-inner-custom"
+          ? "body-16_SB 2xl:body-18_SB bg-secondary text-primary shadow-inner-custom"
           : "hover:text-primary"
       )}
     >
-      <Link to={href} className="flex gap-2">
-        <div
-          className={cn(
-            active
-              ? ""
-              : "text-gray-500 group-hover:text-primary transition-all"
-          )}
-        >
-          <div className="size-5">{icon}</div>
-        </div>
-        {label}
-      </Link>
-    </Button>
+      <div
+        className={cn(
+          active ? "" : "text-gray-500 group-hover:text-primary transition-all"
+        )}
+      >
+        <div className="size-5">{icon}</div>
+      </div>
+      {label}
+    </Link>
   );
 }

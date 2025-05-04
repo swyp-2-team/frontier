@@ -10,8 +10,8 @@ export default function Sidebar() {
   const currentPath = useGetCurrentPath();
 
   return (
-    <aside className="w-60 py-4 px-5 flex flex-col h-fit sticky top-0">
-      <nav className="flex flex-col">
+    <aside className="shrink-0 w-60 py-4 px-5 flex flex-col min-h-full border-r border-gray-400">
+      <nav className="flex flex-col sticky top-0">
         <SidebarItem
           icon={<HomeIcon className="size-full" />}
           label="HOME"

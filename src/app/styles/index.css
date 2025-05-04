@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Gowun+Dodum&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @tailwind utilities;
@@ -69,8 +71,7 @@
   --color-red: #ed1c24;
 
   /* 폰트 설정 */
-  --font-sans: "Noto Sans", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji";
+  --font-sans: "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 
   /* 그림자 설정 */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -171,6 +172,9 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    font-family: var(--font-sans);
+  }
   body {
     @apply bg-background text-foreground;
   }
@@ -199,15 +203,6 @@
     --ring: #c4b5fd;
     --muted: #334155;
     --muted-foreground: #94a3b8;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  html {
-    @apply font-sans;
   }
 }
 

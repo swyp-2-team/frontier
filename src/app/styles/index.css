@@ -66,6 +66,8 @@
   --color-gray-300: #e5e5ec;
   --color-gray-200: #f1f1f5;
   --color-gray-100: #fbf9f7;
+  --opacity--black_90: #111111e6;
+  --opacity--white_90: #ffffffe6;
 
   /* Font color */
   --color-red: #ed1c24;
@@ -89,6 +91,7 @@
     inset -1px -1px 4px 0px rgba(255, 251, 251, 0.25);
   --shadow-warning: inset -2px -2px 0 #bf1717ff, inset 4px 4px 0 #ff9494ff;
   --shadow-success: inset -2px -2px 0 #047232ff, inset 4px 4px 0 #4fe68fe0;
+  --shadow-alertncopy: 5px 5px 4px rgba(0, 0, 0, 0.03);
 
   /* 반응형 중단점 */
   --breakpoint-sm: 40rem;

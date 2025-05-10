@@ -11,6 +11,9 @@ dist
 dist-ssr
 *.local
 
+# 환경변수
+.env
+
 # 빌드 아티팩트
 /build
 /.build

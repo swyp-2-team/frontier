@@ -11,6 +11,7 @@ import { Input } from "../../../shared/components/ui/input";
 import { Label } from "../../../shared/components/ui/label";
 import { MOCK_CREDENTIALS } from "@/shared/lib/const";
 import { CheckBox } from "./checkbox";
+import { AlertDialog } from "../../../shared/components/ui/alertdialog";
 
 import EyeOn from "@/assets/icons/eyes_on.svg?react";
 import EyeOff from "@/assets/icons/eyes_off.svg?react";
@@ -37,6 +38,8 @@ export function LoginForm({
       password: "",
     },
     isSubmitting: false,
+    showDialog: false,
+    dialogType: "success" as "success" | "warning",
   });
 
   // 토글 함수
@@ -66,6 +69,16 @@ export function LoginForm({
     }
   };
 
+  // Dialog 상태 변경 핸들러
+  const handleDialogChange = (open: boolean) => {
+    setState((prev) => ({ ...prev, showDialog: open }));
+
+    // 로그인 성공 시 Dialog가 닫히면 홈페이지로 이동
+    if (!open && state.dialogType === "success") {
+      navigate("/home");
+    }
+  };
+
   // 로그인 처리 함수
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,9 +99,15 @@ export function LoginForm({
           ...prev,
           errors: { id: "", password: "" },
           isSubmitting: false,
+          showDialog: true,
+          dialogType: "success",
         }));
-        alert("로그인 성공!");
-        navigate("/home");
+
+        // 다이얼로그를 자동으로 닫고 홈으로 이동 (옵션)
+        setTimeout(() => {
+          setState((prev) => ({ ...prev, showDialog: false }));
+          navigate("/home");
+        }, 2000);
       } else {
         // 로그인 실패
         console.log("로그인 실패");
@@ -99,6 +118,8 @@ export function LoginForm({
             password: "아이디 또는 비밀번호가 일치하지 않습니다",
           },
           isSubmitting: false,
+          showDialog: true,
+          dialogType: "warning",
         }));
       }
     }, 1000); // 네트워크 지연 시뮬레이션
@@ -109,6 +130,13 @@ export function LoginForm({
       className={cn("flex flex-col w-full max-w-lg p-6", className)}
       {...props}
     >
+      {/* Dialog for login feedback */}
+      <AlertDialog
+        open={state.showDialog}
+        onOpenChange={handleDialogChange}
+        type={state.dialogType}
+      />
+
       <Card>
         <CardHeader>
           <CardTitle>Log-in</CardTitle>

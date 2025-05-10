@@ -86,8 +86,6 @@ export function LoginForm({
           ...prev,
           errors: { id: "", password: "" },
           isSubmitting: false,
-          showDialog: true,
-          dialogType: "success",
         }));
 
         // 다이얼로그를 자동으로 닫고 홈으로 이동 (옵션)
@@ -105,8 +103,6 @@ export function LoginForm({
             password: "아이디 또는 비밀번호가 일치하지 않습니다",
           },
           isSubmitting: false,
-          showDialog: true,
-          dialogType: "warning",
         }));
       }
     }, 1000); // 네트워크 지연 시뮬레이션

@@ -1,22 +1,26 @@
 import { navigate } from "@/lib/navigation";
-import axios from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 
 // baseURL
 const baseURL = import.meta.env.VITE_API_BASE_URL;
+
+// _retry 확장 정의
+interface RetryableRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
 
 const instance = axios.create({
   baseURL,
   withCredentials: true, // 서버에서 반환해주는 토큰을 자동으로 httpOnly 쿠키에 저장 및 활용
   timeout: 1000 * 15, // timeout 15초
+  headers: {
+    "Content-Type": "application/json",
+    accept: "application/json",
+  },
 });
 
 // 요청 인터셉터
 instance.interceptors.request.use((config) => {
-  config.params = {
-    delay: 500, // 테스트용 딜레이 0.5초
-    ...config.params,
-  };
-
   return config;
 });
 
@@ -26,7 +30,7 @@ instance.interceptors.response.use(
   // 에러 나면 아래 로직으로 에러 핸들링
   async (error) => {
     // 이전 요청이 에러났을 때의 config 객체
-    const originalRequest = error.config;
+    const originalRequest = error.config as RetryableRequestConfig;
 
     // unauthorized(401) 에러인지 확인
     if (error.response?.status === 401 && !originalRequest._retry) {
@@ -50,3 +54,5 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export default instance;

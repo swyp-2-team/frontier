@@ -135,6 +135,11 @@ export function LoginForm({
         open={state.showDialog}
         onOpenChange={handleDialogChange}
         type={state.dialogType}
+        description={
+          state.dialogType === "success"
+            ? "성공적으로 로그인되었습니다."
+            : "아이디 또는 비밀번호가 일치하지 않습니다."
+        }
       />
 
       <Card>

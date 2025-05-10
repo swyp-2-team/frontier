@@ -13,16 +13,18 @@ interface LoginDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   type: "success" | "warning";
+  description: string;
 }
 
-export function AlertDialog({ open, onOpenChange, type }: LoginDialogProps) {
+export function AlertDialog({
+  open,
+  onOpenChange,
+  type,
+  description,
+}: LoginDialogProps) {
   const bgColor = type === "success" ? "bg-urgency-low" : "bg-urgency-high";
   const iconShadow = type === "success" ? "shadow-success" : "shadow-warning";
   const title = type === "success" ? "Success" : "Warning";
-  const description =
-    type === "success"
-      ? "성공적으로 로그인되었습니다."
-      : "아이디 또는 비밀번호가 일치하지 않습니다.";
 
   const handleClose = () => {
     onOpenChange(false);

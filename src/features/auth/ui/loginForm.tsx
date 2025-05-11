@@ -6,15 +6,15 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../shared/components/ui/card";
-import { Input } from "../../../shared/components/ui/input";
-import { Label } from "../../../shared/components/ui/label";
+} from "@/shared/components/ui/card";
+import { Input } from "@/shared/components/ui/input";
+import { Label } from "@/shared/components/ui/label";
 import { MOCK_CREDENTIALS } from "@/shared/lib/const";
 import { CheckBox } from "./checkbox";
+import { navigate } from "@/lib/navigation";
 
 import EyeOn from "@/assets/icons/eyes_on.svg?react";
 import EyeOff from "@/assets/icons/eyes_off.svg?react";
-import { navigate } from "@/lib/navigation";
 
 export function LoginForm({
   className,
@@ -176,7 +176,7 @@ export function LoginForm({
               </div>
               <Button
                 type="submit"
-                className="w-full my-10 body-16_SB"
+                className="w-full 2xl:w-full my-10 body-16_SB"
                 disabled={state.isSubmitting}
               >
                 {state.isSubmitting ? "로그인 중..." : "로그인"}

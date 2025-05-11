@@ -14,7 +14,7 @@ import { CheckBox } from "./checkbox";
 
 import EyeOn from "@/assets/icons/eyes_on.svg?react";
 import EyeOff from "@/assets/icons/eyes_off.svg?react";
-import { useNavigate } from "react-router-dom";
+import { navigate } from "@/lib/navigation";
 
 export function LoginForm({
   className,
@@ -25,8 +25,6 @@ export function LoginForm({
     id: "",
     password: "",
   });
-  // 내비게이션
-  const navigate = useNavigate();
 
   // 로그인 상태 유지 체크 상태, 비밀번호 보이기 토글 상태, 에러 상태
   const [state, setState] = useState({

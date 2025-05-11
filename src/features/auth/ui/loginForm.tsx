@@ -10,6 +10,7 @@ import {
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import { MOCK_CREDENTIALS } from "@/shared/lib/const";
+import LoginError from "@/shared/components/ui/loginerror";
 import { CheckBox } from "./checkbox";
 import { navigate } from "@/lib/navigation";
 
@@ -97,8 +98,8 @@ export function LoginForm({
         setState((prev) => ({
           ...prev,
           errors: {
-            id: "아이디 또는 비밀번호가 일치하지 않습니다",
-            password: "아이디 또는 비밀번호가 일치하지 않습니다",
+            id: "아이디가 일치하지 않습니다.",
+            password: "비밀번호가 일치하지 않습니다.",
           },
           isSubmitting: false,
         }));
@@ -130,9 +131,7 @@ export function LoginForm({
                   required
                   aria-invalid={!!state.errors.id}
                 />
-                {state.errors.id && (
-                  <p className="text-sm text-red-500 mt-1">{state.errors.id}</p>
-                )}
+                {state.errors.id && <LoginError errorText={state.errors.id} />}
               </div>
               <div className="grid gap-1.5 mb-5">
                 <div className="flex items-center">
@@ -162,9 +161,7 @@ export function LoginForm({
                   </div>
                 </div>
                 {state.errors.password && (
-                  <p className="text-sm text-red-500 mt-1">
-                    {state.errors.password}
-                  </p>
+                  <LoginError errorText={state.errors.password} />
                 )}
               </div>
               <div className="pl-2.5 flex items-start">

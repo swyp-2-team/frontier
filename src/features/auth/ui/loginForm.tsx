@@ -12,7 +12,7 @@ import { Label } from "@/shared/components/ui/label";
 import { MOCK_CREDENTIALS } from "@/shared/lib/const";
 import LoginError from "@/shared/components/ui/loginerror";
 import { CheckBox } from "./checkbox";
-import { navigate } from "@/lib/navigation";
+import { navigate } from "@/shared/lib/navigation";
 
 import EyeOn from "@/assets/icons/eyes_on.svg?react";
 import EyeOff from "@/assets/icons/eyes_off.svg?react";

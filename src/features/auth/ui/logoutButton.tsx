@@ -1,4 +1,4 @@
-import { navigate } from "@/lib/navigation";
+import { navigate } from "@/shared/lib/navigation";
 
 export default function LogoutButton() {
   const handleLogout = () => {

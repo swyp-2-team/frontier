@@ -18,7 +18,7 @@ export default function IncidentMntPage() {
   return (
     <div className="flex-1 flex-col w-full min-w-md justify-self-center gap-[26px] px-[42px]">
       <Breadcrumb className="self-start mb-[38px]">
-        <BreadcrumbList className="body-13 text-gray-800">
+        <BreadcrumbList className="body-16 text-gray-800">
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
               <Link to="/home">홈</Link>
@@ -26,7 +26,7 @@ export default function IncidentMntPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink className="body-13_SB text-black" asChild>
+            <BreadcrumbLink className="body-16_SB text-black" asChild>
               <Link to="/incident-mnt">장애관리</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>

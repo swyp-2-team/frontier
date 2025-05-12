@@ -87,11 +87,10 @@ export function LoginForm({
           isSubmitting: false,
         }));
 
-        // 다이얼로그를 자동으로 닫고 홈으로 이동 (옵션)
+        // 홈으로 이동
         setTimeout(() => {
-          setState((prev) => ({ ...prev, showDialog: false }));
           navigate("/home");
-        }, 2000);
+        }, 1000);
       } else {
         // 로그인 실패
         console.log("로그인 실패");

@@ -10,8 +10,18 @@ export default function HowToUse() {
         <p className="body-16 2xl:title-20 text-gray-800 mb-5 2xl:mb-9">
           노티코어를 제대로 활용하는 방법, 지금 가이드에서 확인하세요
         </p>
-        <Button variant={"black"} className="body-16_SB 2xl:body-18_SB">
-          다운로드
+        <Button
+          onClick={() =>
+            window.open(
+              "https://leather-skate-422.notion.site/Noticore-Draft-1eb61ff41cbd8057a1d6fbc2ae732b19",
+              "_blank",
+              "noopener,noreferrer"
+            )
+          }
+          variant={"black"}
+          className="body-16_SB 2xl:body-18_SB"
+        >
+          가이드 확인하기
         </Button>
       </section>
     </article>

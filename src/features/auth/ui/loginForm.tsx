@@ -6,15 +6,16 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../shared/components/ui/card";
-import { Input } from "../../../shared/components/ui/input";
-import { Label } from "../../../shared/components/ui/label";
+} from "@/shared/components/ui/card";
+import { Input } from "@/shared/components/ui/input";
+import { Label } from "@/shared/components/ui/label";
 import { MOCK_CREDENTIALS } from "@/shared/lib/const";
+import LoginError from "@/shared/components/ui/loginerror";
 import { CheckBox } from "./checkbox";
+import { navigate } from "@/shared/lib/navigation";
 
 import EyeOn from "@/assets/icons/eyes_on.svg?react";
 import EyeOff from "@/assets/icons/eyes_off.svg?react";
-import { useNavigate } from "react-router-dom";
 
 export function LoginForm({
   className,
@@ -25,8 +26,6 @@ export function LoginForm({
     id: "",
     password: "",
   });
-  // 내비게이션
-  const navigate = useNavigate();
 
   // 로그인 상태 유지 체크 상태, 비밀번호 보이기 토글 상태, 에러 상태
   const [state, setState] = useState({
@@ -88,19 +87,18 @@ export function LoginForm({
           isSubmitting: false,
         }));
 
-        // 다이얼로그를 자동으로 닫고 홈으로 이동 (옵션)
+        // 홈으로 이동
         setTimeout(() => {
-          setState((prev) => ({ ...prev, showDialog: false }));
           navigate("/home");
-        }, 2000);
+        }, 1000);
       } else {
         // 로그인 실패
         console.log("로그인 실패");
         setState((prev) => ({
           ...prev,
           errors: {
-            id: "아이디 또는 비밀번호가 일치하지 않습니다",
-            password: "아이디 또는 비밀번호가 일치하지 않습니다",
+            id: "아이디가 일치하지 않습니다.",
+            password: "비밀번호가 일치하지 않습니다.",
           },
           isSubmitting: false,
         }));
@@ -132,9 +130,7 @@ export function LoginForm({
                   required
                   aria-invalid={!!state.errors.id}
                 />
-                {state.errors.id && (
-                  <p className="text-sm text-red-500 mt-1">{state.errors.id}</p>
-                )}
+                {state.errors.id && <LoginError errorText={state.errors.id} />}
               </div>
               <div className="grid gap-1.5 mb-5">
                 <div className="flex items-center">
@@ -164,9 +160,7 @@ export function LoginForm({
                   </div>
                 </div>
                 {state.errors.password && (
-                  <p className="text-sm text-red-500 mt-1">
-                    {state.errors.password}
-                  </p>
+                  <LoginError errorText={state.errors.password} />
                 )}
               </div>
               <div className="pl-2.5 flex items-start">
@@ -178,7 +172,7 @@ export function LoginForm({
               </div>
               <Button
                 type="submit"
-                className="w-full my-10 body-16_SB"
+                className="w-full 2xl:w-full my-10 body-16_SB"
                 disabled={state.isSubmitting}
               >
                 {state.isSubmitting ? "로그인 중..." : "로그인"}

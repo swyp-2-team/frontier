@@ -1,4 +1,4 @@
-import { navigate } from "@/lib/navigation";
+import { navigate } from "@/shared/lib/navigation";
 import axios, { InternalAxiosRequestConfig } from "axios";
 
 // baseURL

@@ -1,8 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { navigate } from "@/shared/lib/navigation";
 
 export default function LogoutButton() {
-  const navigate = useNavigate();
-
   const handleLogout = () => {
     console.log("Logging out");
     navigate("/");

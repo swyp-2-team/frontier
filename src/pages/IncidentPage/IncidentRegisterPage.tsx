@@ -14,9 +14,13 @@ import {
 } from "@shared/components/ui/accordion";
 
 import { useState } from "react";
-import { toast } from "sonner";
 import TemplateCopyCard from "@/features/incident/ui/TemplateCopyCard";
 import { Link } from "react-router-dom";
+import {
+  onBodyClick,
+  onRecipientClick,
+  onSubjectClick,
+} from "@/features/incident/model/copyIncidentTemplate";
 
 const groups = [
   {
@@ -78,20 +82,6 @@ export default function IncidentRegisterPage() {
 
   // 선택된 수신 그룹 상태 관리
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-
-  // 복사하기 버튼 눌렀을 때 실행할 함수
-  const onRecipientClick = () => {
-    toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");
-    setIsRecipientClicked(true);
-  };
-  const onSubjectClick = () => {
-    toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");
-    setIsSubjectClicked(true);
-  };
-  const onBodyClick = () => {
-    toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");
-    setIsBodyClicked(true);
-  };
 
   return (
     <main className="flex flex-col items-center w-full px-[42px]">
@@ -180,20 +170,22 @@ export default function IncidentRegisterPage() {
                 copyTitle="받는 사람"
                 copySubtitle="noticore@noticore.co.kr"
                 clickState={isRecipientClicked}
-                onClick={onRecipientClick}
+                onClick={() => onRecipientClick(setIsRecipientClicked)}
               />
               <TemplateCopyCard
                 copyTitle="제목"
                 selectedGroups={selectedGroups}
                 clickState={isSubjectClicked}
-                onClick={onSubjectClick}
+                onClick={() =>
+                  onSubjectClick(selectedGroups, setIsSubjectClicked)
+                }
               />
 
               <TemplateCopyCard
                 copyTitle="내용"
                 copyContent={true}
                 clickState={isBodyClicked}
-                onClick={onBodyClick}
+                onClick={() => onBodyClick(setIsBodyClicked)}
               />
             </div>
           </section>

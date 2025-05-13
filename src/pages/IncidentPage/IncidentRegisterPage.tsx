@@ -14,9 +14,13 @@ import {
 } from "@shared/components/ui/accordion";
 
 import { useState } from "react";
-import { toast } from "sonner";
 import TemplateCopyCard from "@/features/incident/ui/TemplateCopyCard";
 import { Link } from "react-router-dom";
+import {
+  onBodyClick,
+  onRecipientClick,
+  onSubjectClick,
+} from "@/features/incident/model/copyIncidentTemplate";
 
 const groups = [
   {
@@ -77,27 +81,13 @@ export default function IncidentRegisterPage() {
   const [isBodyClicked, setIsBodyClicked] = useState<boolean>(false); // 내용 섹션
 
   // 선택된 수신 그룹 상태 관리
-  const [selectedGroup, setSelectedGroup] = useState<string>("");
-
-  // 복사하기 버튼 눌렀을 때 실행할 함수
-  const onRecipientClick = () => {
-    toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");
-    setIsRecipientClicked(true);
-  };
-  const onSubjectClick = () => {
-    toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");
-    setIsSubjectClicked(true);
-  };
-  const onBodyClick = () => {
-    toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");
-    setIsBodyClicked(true);
-  };
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
 
   return (
     <main className="flex flex-col items-center w-full px-[42px]">
       {/* Breadcrumb */}
       <Breadcrumb className="self-start mb-[38px]">
-        <BreadcrumbList className="body-13 text-gray-800">
+        <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
               <Link to="/home">홈</Link>
@@ -105,7 +95,7 @@ export default function IncidentRegisterPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink asChild className="body-13_SB text-black">
+            <BreadcrumbLink asChild className="body-16_SB text-black">
               <Link to="/incident-register">장애등록</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -136,10 +126,9 @@ export default function IncidentRegisterPage() {
             </div>
 
             <Accordion
-              type="single"
+              type="multiple"
               className="bg-white text-black rounded-[12px] border-gray-300 body-16 overflow-hidden"
-              onValueChange={setSelectedGroup}
-              collapsible
+              onValueChange={setSelectedGroups}
             >
               {groups.map((group) => (
                 <AccordionItem
@@ -181,20 +170,22 @@ export default function IncidentRegisterPage() {
                 copyTitle="받는 사람"
                 copySubtitle="noticore@noticore.co.kr"
                 clickState={isRecipientClicked}
-                onClick={onRecipientClick}
+                onClick={() => onRecipientClick(setIsRecipientClicked)}
               />
               <TemplateCopyCard
                 copyTitle="제목"
-                selectedGroup={selectedGroup}
+                selectedGroups={selectedGroups}
                 clickState={isSubjectClicked}
-                onClick={onSubjectClick}
+                onClick={() =>
+                  onSubjectClick(selectedGroups, setIsSubjectClicked)
+                }
               />
 
               <TemplateCopyCard
                 copyTitle="내용"
                 copyContent={true}
                 clickState={isBodyClicked}
-                onClick={onBodyClick}
+                onClick={() => onBodyClick(setIsBodyClicked)}
               />
             </div>
           </section>

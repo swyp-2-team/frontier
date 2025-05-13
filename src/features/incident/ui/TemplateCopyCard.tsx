@@ -10,7 +10,7 @@ interface TemplateCopyCardProps {
   copyTitle: string;
   copySubtitle?: string;
   copyContent?: boolean;
-  selectedGroup?: string;
+  selectedGroups?: string[];
   clickState: boolean;
   onClick: () => void;
 }
@@ -19,7 +19,7 @@ export default function TemplateCopyCard({
   copyTitle,
   copySubtitle,
   copyContent,
-  selectedGroup,
+  selectedGroups,
   clickState,
   onClick,
 }: TemplateCopyCardProps) {
@@ -36,7 +36,7 @@ export default function TemplateCopyCard({
           <div className="flex items-center w-full">
             <p
               className={cn(
-                "body-16_SB mr-[10px]",
+                "body-16_SB mr-[10px] shrink-0 mb-auto",
                 clickState ? "text-primary" : "text-gray-700"
               )}
             >
@@ -44,29 +44,31 @@ export default function TemplateCopyCard({
             </p>
 
             {copySubtitle && (
-              <p
+              <span
                 className={cn(
                   "body-13",
                   clickState ? "text-primary" : "text-gray-600"
                 )}
               >
                 {copySubtitle}
-              </p>
+              </span>
             )}
-            {selectedGroup && (
+            {selectedGroups && selectedGroups.length > 0 && (
               <p
                 className={cn(
-                  "body-13",
+                  "body-13 pr-3 text-left",
                   clickState ? "text-primary" : "text-gray-600"
                 )}
               >
-                {selectedGroup}
+                {`[emergency: ${selectedGroups.join(
+                  ", "
+                )}] ‘이 곳에 장애 제목을 입력하세요’`}
               </p>
             )}
 
             <PasteIcon
               className={cn(
-                "size-6 cursor-pointer ml-auto",
+                "size-6 cursor-pointer ml-auto shrink-0",
                 clickState ? "text-primary" : "text-gray-600"
               )}
             />

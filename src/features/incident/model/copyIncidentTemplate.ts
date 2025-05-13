@@ -5,7 +5,7 @@ export const onRecipientClick = async (
   setIsRecipientClicked: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   try {
-    navigator.clipboard.writeText("noticore@noticore.co.kr");
+    await navigator.clipboard.writeText("noticore@noticore.co.kr");
     toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");
     setIsRecipientClicked(true);
   } catch (e) {
@@ -21,7 +21,7 @@ export const onSubjectClick = async (
     toast.error("장애를 수신할 그룹을 먼저 선택하세요.");
   } else {
     try {
-      navigator.clipboard.writeText(
+      await navigator.clipboard.writeText(
         `[emergency: ${selectedGroups.join(
           ", "
         )}] ‘이 곳에 장애 제목을 입력하세요’`
@@ -34,11 +34,11 @@ export const onSubjectClick = async (
   }
 };
 
-export const onBodyClick = (
+export const onBodyClick = async (
   setIsBodyClicked: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   try {
-    navigator.clipboard.writeText(
+    await navigator.clipboard.writeText(
       `1. 장애 발생 시간 : \n2. 장애 확인 경로 : \n3. 장애 증상 : \n4. 영향 범위 : `
     );
     toast.success("복사 되었습니다! 이메일에 붙여넣기하세요.");

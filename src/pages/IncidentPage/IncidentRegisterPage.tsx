@@ -77,7 +77,7 @@ export default function IncidentRegisterPage() {
   const [isBodyClicked, setIsBodyClicked] = useState<boolean>(false); // 내용 섹션
 
   // 선택된 수신 그룹 상태 관리
-  const [selectedGroup, setSelectedGroup] = useState<string>("");
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
 
   // 복사하기 버튼 눌렀을 때 실행할 함수
   const onRecipientClick = () => {
@@ -136,10 +136,9 @@ export default function IncidentRegisterPage() {
             </div>
 
             <Accordion
-              type="single"
+              type="multiple"
               className="bg-white text-black rounded-[12px] border-gray-300 body-16 overflow-hidden"
-              onValueChange={setSelectedGroup}
-              collapsible
+              onValueChange={setSelectedGroups}
             >
               {groups.map((group) => (
                 <AccordionItem
@@ -185,7 +184,7 @@ export default function IncidentRegisterPage() {
               />
               <TemplateCopyCard
                 copyTitle="제목"
-                selectedGroup={selectedGroup}
+                selectedGroups={selectedGroups}
                 clickState={isSubjectClicked}
                 onClick={onSubjectClick}
               />

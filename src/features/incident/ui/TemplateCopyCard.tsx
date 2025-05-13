@@ -10,7 +10,7 @@ interface TemplateCopyCardProps {
   copyTitle: string;
   copySubtitle?: string;
   copyContent?: boolean;
-  selectedGroup?: string;
+  selectedGroups?: string[];
   clickState: boolean;
   onClick: () => void;
 }
@@ -19,7 +19,7 @@ export default function TemplateCopyCard({
   copyTitle,
   copySubtitle,
   copyContent,
-  selectedGroup,
+  selectedGroups,
   clickState,
   onClick,
 }: TemplateCopyCardProps) {
@@ -53,14 +53,16 @@ export default function TemplateCopyCard({
                 {copySubtitle}
               </p>
             )}
-            {selectedGroup && (
+            {selectedGroups && selectedGroups.length > 0 && (
               <p
                 className={cn(
                   "body-13",
                   clickState ? "text-primary" : "text-gray-600"
                 )}
               >
-                {selectedGroup}
+                {`[emergency: ${selectedGroups.join(
+                  ", "
+                )}] ‘이 곳에 장애 제목을 입력하세요’`}
               </p>
             )}
 

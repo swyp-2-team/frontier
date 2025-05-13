@@ -97,7 +97,7 @@ export default function IncidentRegisterPage() {
     <main className="flex flex-col items-center w-full px-[42px]">
       {/* Breadcrumb */}
       <Breadcrumb className="self-start mb-[38px]">
-        <BreadcrumbList className="body-13 text-gray-800">
+        <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
               <Link to="/home">홈</Link>
@@ -105,7 +105,7 @@ export default function IncidentRegisterPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink asChild className="body-13_SB text-black">
+            <BreadcrumbLink asChild className="body-16_SB text-black">
               <Link to="/incident-register">장애등록</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>

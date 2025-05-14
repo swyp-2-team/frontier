@@ -38,7 +38,7 @@ export default function IncidentCard({
           <p className="body-18_SB 2xl:title-20_SB text-gray-600 mb-3">제목</p>
           <p className="title-20 2xl:title-24 text-black">{title}</p>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center shrink-0">
           <p className="body-18_SB 2xl:title-20_SB text-gray-600 mb-3">
             확인인원
           </p>

@@ -11,13 +11,15 @@ export default function IncidentList({
 }) {
   // 장애 목록 조회
   const { data: incidents, isLoading } = useQuery({
-    queryKey: ["incidents", "list"],
+    queryKey: ["incidents", "list", showActive],
     queryFn: () =>
       axios.get<IncidentListType>("/api/incidents/list", {
         params: { completion: !showActive },
       }),
     select: (res) => res.data.incidents,
+    refetchInterval: 10 * 1000, // 10초마다 자동 요청
   });
+
   if (isLoading) return <Spinner />;
 
   const incidentList = renderIncidentList(incidents);

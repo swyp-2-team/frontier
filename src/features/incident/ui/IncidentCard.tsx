@@ -1,5 +1,6 @@
 import { Badge } from "@/shared/components/ui/badge";
 import UserIcon from "@/assets/icons/user.svg?react";
+import { formatDate } from "@/shared/lib/formatDate";
 
 interface IncidentCardProps {
   groupName: string;
@@ -27,7 +28,9 @@ export default function IncidentCard({
           <p className="body-18_SB 2xl:title-20_SB text-gray-600 mb-3">
             등록시간
           </p>
-          <p className="title-20 2xl:title-24 text-gray-700">{time}</p>
+          <p className="title-20 2xl:title-24 text-gray-700">
+            {formatDate(time)}
+          </p>
         </div>
       </section>
       <section className="flex items-center pl-12 2xl:pl-18 justify-between text-sm text-gray-500 w-full">
@@ -35,7 +38,7 @@ export default function IncidentCard({
           <p className="body-18_SB 2xl:title-20_SB text-gray-600 mb-3">제목</p>
           <p className="title-20 2xl:title-24 text-black">{title}</p>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center shrink-0">
           <p className="body-18_SB 2xl:title-20_SB text-gray-600 mb-3">
             확인인원
           </p>

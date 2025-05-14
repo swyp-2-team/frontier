@@ -9,10 +9,10 @@ import {
 } from "@/shared/components/ui/card";
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
-import { MOCK_CREDENTIALS } from "@/shared/lib/const";
 import LoginError from "@/shared/components/ui/loginerror";
-import { CheckBox } from "./checkbox";
 import { navigate } from "@/shared/lib/navigation";
+import { CheckBox } from "./checkbox";
+import authApi from "../api/auth";
 
 import EyeOn from "@/assets/icons/eyes_on.svg?react";
 import EyeOff from "@/assets/icons/eyes_off.svg?react";
@@ -23,7 +23,7 @@ export function LoginForm({
 }: React.ComponentPropsWithoutRef<"div">) {
   // 폼 입력값 상태
   const [formValues, setFormValues] = useState({
-    id: "",
+    email: "",
     password: "",
   });
 
@@ -32,7 +32,7 @@ export function LoginForm({
     isLoginChecked: false,
     pwIconChecked: false,
     errors: {
-      id: "",
+      email: "",
       password: "",
     },
     isSubmitting: false,
@@ -70,40 +70,38 @@ export function LoginForm({
     e.preventDefault();
     setState((prev) => ({ ...prev, isSubmitting: true }));
 
-    // 모킹된 로그인 검증 (실제로는 API 호출로 대체됨)
-    setTimeout(() => {
-      if (
-        formValues.id === MOCK_CREDENTIALS.id &&
-        formValues.password === MOCK_CREDENTIALS.password
-      ) {
-        // 로그인 성공
-        console.log("로그인 성공:", {
-          ...formValues,
-          isLoginChecked: state.isLoginChecked,
-        });
-        setState((prev) => ({
-          ...prev,
-          errors: { id: "", password: "" },
-          isSubmitting: false,
-        }));
+    try {
+      const response = await authApi.login(formValues);
+      console.log("로그인 성공:", response);
+      setState((prev) => ({
+        ...prev,
+        errors: { email: "", password: "" },
+        isSubmitting: false,
+      }));
 
-        // 홈으로 이동
-        setTimeout(() => {
-          navigate("/home");
-        }, 1000);
-      } else {
-        // 로그인 실패
-        console.log("로그인 실패");
-        setState((prev) => ({
-          ...prev,
-          errors: {
-            id: "아이디가 일치하지 않습니다.",
-            password: "비밀번호가 일치하지 않습니다.",
-          },
-          isSubmitting: false,
-        }));
-      }
-    }, 1000); // 네트워크 지연 시뮬레이션
+      handleLoginSuccess();
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      setState((prev) => ({
+        ...prev,
+        errors: {
+          email: "이메일이 일치하지 않습니다.",
+          password: "비밀번호가 일치하지 않습니다.",
+        },
+        isSubmitting: false,
+      }));
+    }
+  };
+
+  // 로그인 성공 후 처리
+  const handleLoginSuccess = () => {
+    // 로그인 전에 저장된 리다이렉트 URL 확인
+    const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
+
+    if (redirectUrl) {
+      sessionStorage.removeItem("redirectAfterLogin");
+      window.location.href = redirectUrl; // 저장된 URL로 이동
+    }
   };
 
   return (
@@ -119,18 +117,20 @@ export function LoginForm({
           <form onSubmit={handleLogin}>
             <div className="flex flex-col">
               <div className="grid gap-1.5 mb-3">
-                <Label htmlFor="id">ID</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
-                  id="id"
-                  name="id"
-                  type="text"
-                  placeholder="아이디를 입력해주세요"
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="이메일을 입력해주세요"
                   onChange={handleInputChange}
-                  value={formValues.id}
+                  value={formValues.email}
                   required
-                  aria-invalid={!!state.errors.id}
+                  aria-invalid={!!state.errors.email}
                 />
-                {state.errors.id && <LoginError errorText={state.errors.id} />}
+                {state.errors.email && (
+                  <LoginError errorText={state.errors.email} />
+                )}
               </div>
               <div className="grid gap-1.5 mb-5">
                 <div className="flex items-center">

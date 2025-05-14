@@ -21,58 +21,10 @@ import {
   onRecipientClick,
   onSubjectClick,
 } from "@/features/incident/model/copyIncidentTemplate";
-
-const groups = [
-  {
-    id: 1,
-    groupName: "Group_1",
-    human: [
-      "김철수",
-      "이영희",
-      "박민수",
-      "최수정",
-      "정우성",
-      "한가인",
-      "장동건",
-      "고소영",
-      "이정재",
-      "송강호",
-      "전지현",
-      "황정민",
-      "강호동",
-      "유재석",
-      "이효리",
-      "신동엽",
-      "김종국",
-      "윤아",
-    ],
-  },
-  {
-    id: 2,
-    groupName: "Group_2",
-    human: ["최수정", "정우성", "한가인"],
-  },
-  {
-    id: 3,
-    groupName: "Group_3",
-    human: ["장동건", "고소영", "이정재"],
-  },
-  {
-    id: 4,
-    groupName: "Group_4",
-    human: ["송강호", "전지현", "황정민"],
-  },
-  {
-    id: 5,
-    groupName: "Group_5",
-    human: ["강호동", "유재석", "이효리"],
-  },
-  {
-    id: 6,
-    groupName: "Group_6",
-    human: ["신동엽", "김종국", "윤아"],
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import axios from "@/shared/api/baseInstance";
+import { GroupListResponseType } from "@/shared/types/group";
+import Spinner from "@/shared/components/ui/Spinner";
 
 export default function IncidentRegisterPage() {
   // 복사 버튼 선택시 상태 관리
@@ -82,6 +34,13 @@ export default function IncidentRegisterPage() {
 
   // 선택된 수신 그룹 상태 관리
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+
+  // 그룹 목록 조회
+  const { data: groupList, isLoading } = useQuery({
+    queryKey: ["groups", "list"],
+    queryFn: () => axios.get<GroupListResponseType>("/api/groups/list"),
+    select: (res) => res.data.groups,
+  });
 
   return (
     <main className="flex flex-col items-center w-full px-[42px]">
@@ -125,30 +84,34 @@ export default function IncidentRegisterPage() {
               </p>
             </div>
 
-            <Accordion
-              type="multiple"
-              className="bg-white text-black rounded-[12px] border-gray-300 body-16 overflow-hidden"
-              onValueChange={setSelectedGroups}
-            >
-              {groups.map((group) => (
-                <AccordionItem
-                  key={group.id}
-                  value={group.groupName}
-                  className="hover:bg-tertiary"
-                >
-                  <AccordionTrigger className="px-4 rounded-none [&[data-state=open]]:bg-primary [&[data-state=open]]:text-white">
-                    {group.groupName}
-                  </AccordionTrigger>
-                  <AccordionContent className="bg-gray-100 px-4 py-[30px] flex justify-center gap-4 flex-wrap">
-                    {group.human.map((human) => (
-                      <span key={human} className="body-16 text-gray-700">
-                        {human}
-                      </span>
-                    ))}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <Accordion
+                type="multiple"
+                className="bg-white text-black rounded-[12px] border-gray-300 body-16 overflow-hidden"
+                onValueChange={setSelectedGroups}
+              >
+                {groupList?.map((group) => (
+                  <AccordionItem
+                    key={group.id}
+                    value={group.name}
+                    className="hover:bg-tertiary"
+                  >
+                    <AccordionTrigger className="px-4 rounded-none [&[data-state=open]]:bg-primary [&[data-state=open]]:text-white">
+                      {group.name}
+                    </AccordionTrigger>
+                    <AccordionContent className="bg-gray-100 px-4 py-[30px] flex justify-center gap-4 flex-wrap">
+                      {group.members.map((member) => (
+                        <span key={member} className="body-16 text-gray-700">
+                          {member}
+                        </span>
+                      ))}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            )}
           </section>
 
           {/* Step 2: 템플릿 복사 */}

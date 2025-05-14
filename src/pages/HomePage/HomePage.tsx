@@ -13,6 +13,7 @@ export default function HomePage() {
         <h1 className="body-18_SB 2xl:title-20_SB text-gray-700 mb-5 2xl:mb-8">
           현재 발생중인 장애
         </h1>
+
         <IncidentList showActive={true} />
       </section>
     </main>

@@ -39,7 +39,7 @@ instance.interceptors.response.use(
 
       // 토큰 갱신 로직 실행
       try {
-        await axios.post("/auth/refresh", null, {
+        await axios.post("/api/auth/refresh", null, {
           baseURL,
           withCredentials: true,
         });

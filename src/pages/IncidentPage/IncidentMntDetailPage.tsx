@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
 import OutIcon from "@/assets/icons/out.svg?react";
@@ -11,6 +11,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@shared/components/ui/breadcrumb";
+import { navigate } from "@/shared/lib/navigation";
 
 // 템플릿 내용용 타입 정의
 interface TemplateContent {
@@ -103,7 +104,6 @@ const COMMENTS_MOCKUP: Comment[] = [
 ];
 
 export default function IncidentMntDetailPage() {
-  const navigate = useNavigate(); // 네비게이션 훅 추가
   const { incidentId } = useParams<{ incidentId: string }>();
   const [dividerHeight, setDividerHeight] = useState(0);
   const [incidentDetail, setIncidentDetail] = useState<IncidentDetail | null>(

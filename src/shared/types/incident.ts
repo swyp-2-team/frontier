@@ -1,4 +1,4 @@
-interface Group {
+interface GroupAtIncident {
   id: number;
   name: string;
   members: {
@@ -13,7 +13,7 @@ export interface Incident {
   title: string;
   registrationTime: string;
   closingTime: string | null;
-  groups: Group[];
+  groups: GroupAtIncident[];
 }
 
 export interface IncidentListType {

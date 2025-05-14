@@ -177,13 +177,6 @@ export function LoginForm({
               >
                 {state.isSubmitting ? "로그인 중..." : "로그인"}
               </Button>
-
-              {/* 테스트를 위한 도움말 */}
-              <div className="text-sm text-gray-500 border-t pt-4 mt-2">
-                <p>테스트 계정:</p>
-                <p>ID: {MOCK_CREDENTIALS.id}</p>
-                <p>Password: {MOCK_CREDENTIALS.password}</p>
-              </div>
             </div>
           </form>
         </CardContent>

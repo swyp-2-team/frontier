@@ -1,7 +1,6 @@
 import { useRefetchIncidents } from "@/features/incident/model/useRefetchIncident";
 import IncidentList from "@/features/incident/ui/IncidentList";
 import Banner from "@/shared/components/ui/Banner";
-import { Button } from "@/shared/components/ui/button";
 import HowToUse from "@/shared/components/ui/HowToUse";
 import RefreshIcon from "@/assets/icons/refresh.svg?react";
 

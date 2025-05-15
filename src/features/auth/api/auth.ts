@@ -42,10 +42,11 @@ export const logout = async (): Promise<void> => {
   try {
     // 서버에 로그아웃 요청
     await instance.post("/api/auth/logout");
-  } finally {
-    // UI용 상태만 제거
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("userInfo");
+    console.log("로그아웃 성공");
+  } catch (error) {
+    console.error("로그아웃 API 호출 실패:", error);
+    // 에러를 다시 던져서 호출자가 처리하게 함
+    throw error;
   }
 };
 
@@ -79,13 +80,13 @@ export const validateSession = async (): Promise<boolean> => {
   }
 
   try {
-    // 서버에 현재 세션 상태 확인 요청
-    await instance.get("/api/auth/refresh");
-    return true;
+    // API 호출 전에 로컬 스토리지/세션 스토리지를 확인하지 않음
+    // 직접 API 호출로 세션 유효성만 체크
+    const response = await instance.get("/api/auth/refresh");
+    return response.status === 200;
   } catch (error) {
-    // 검증 실패 시 (쿠키 만료, 서버 오류 등) 인증 상태 제거
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("userInfo");
+    console.error("세션 검증 오류:", error);
+    // 오류 발생 시에도 함부로 토큰/쿠키 삭제하지 않음
     return false;
   }
 };

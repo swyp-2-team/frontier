@@ -8,6 +8,26 @@ interface GroupAtIncident {
   }[];
 }
 
+export interface IncidentDetail {
+  incidentId: number;
+  bucket: string;
+  s3Uuid: string;
+  title: string;
+  registrationTime: string;
+  closingTime: string | null;
+  groups: [
+    {
+      id: number;
+      name: string;
+      members: {
+        id: number;
+        name: string;
+        isVerified: false;
+      }[];
+    }
+  ];
+}
+
 export interface Incident {
   id: number;
   title: string;

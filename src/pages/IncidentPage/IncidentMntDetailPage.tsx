@@ -154,7 +154,7 @@ export default function IncidentMntDetailPage() {
   }, [confirmedUsers.length, unconfirmedUsers.length]);
 
   const handleGoBack = () => {
-    navigate(-1); // 이전 페이지로 이동
+    navigate("/incident-mnt"); // 이전 페이지로 이동
   };
 
   const handleAddComment = (content: string) => {

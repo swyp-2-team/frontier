@@ -10,7 +10,8 @@ import {
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import LoginError from "@/shared/components/ui/loginerror";
-import { navigate } from "@/shared/lib/navigation";
+//import { navigate } from "@/shared/lib/navigation";
+import { useNavigate } from "react-router-dom";
 import { CheckBox } from "./checkbox";
 import authApi from "../api/auth";
 
@@ -21,6 +22,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const navigate = useNavigate();
   // 폼 입력값 상태
   const [formValues, setFormValues] = useState({
     email: "",
@@ -71,8 +73,8 @@ export function LoginForm({
     setState((prev) => ({ ...prev, isSubmitting: true }));
 
     try {
-      const response = await authApi.login(formValues);
-      console.log("로그인 성공:", response);
+      /*const response = */ await authApi.login(formValues);
+      //console.log("로그인 성공:", response);
       setState((prev) => ({
         ...prev,
         errors: { email: "", password: "" },
@@ -97,10 +99,15 @@ export function LoginForm({
   const handleLoginSuccess = () => {
     // 로그인 전에 저장된 리다이렉트 URL 확인
     const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
+    //console.log("리다이렉트 URL:", redirectUrl);
+    // 리다이렉트 URL이 존재하면 해당 URL로 이동
 
     if (redirectUrl) {
       sessionStorage.removeItem("redirectAfterLogin");
       window.location.href = redirectUrl; // 저장된 URL로 이동
+    } else {
+      // 리다이렉트 URL이 없으면 기본 페이지로 이동
+      navigate("/home");
     }
   };
 

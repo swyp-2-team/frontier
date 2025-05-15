@@ -6,6 +6,7 @@ import LoginPage from "@/pages/LoginPage/LoginPage";
 import MntPage from "@/pages/MntPage/MntPage";
 import Layout from "@/shared/components/Layouts/Layout";
 import { createBrowserRouter, Navigate } from "react-router-dom";
+import { Protected } from "./protected";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <Protected>
+        <Layout />
+      </Protected>
+    ),
     children: [
       { path: "home", element: <HomePage /> },
       { path: "incident-register", element: <IncidentRegisterPage /> },

@@ -20,19 +20,19 @@ export default function Sidebar() {
         />
         <SidebarItem
           icon={<PencilIcon className="size-full" />}
-          label="장애등록"
+          label="장애 등록"
           active={currentPath === "/incident-register"}
           href="/incident-register"
         />
         <SidebarItem
           icon={<DataIcon className="size-full" />}
-          label="장애관리"
+          label="장애 관리"
           active={currentPath.startsWith("/incident-mnt")}
           href="/incident-mnt"
         />
         <SidebarItem
           icon={<SheildIcon className="size-full" />}
-          label="사용자 및 그룹 관리"
+          label="사용자 관리"
           active={currentPath === "/management"}
           href="/management"
         />

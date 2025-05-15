@@ -29,7 +29,7 @@ export default function LogoutButton() {
       // 오류가 발생해도 로컬 인증 정보는 삭제
       performLocalLogout();
       // 오류가 발생해도 로그인 페이지로 리다이렉트
-      //window.location.href = "/";
+      navigate("/");
 
       toast.error("로그아웃 처리 중 오류가 발생했습니다.");
     } finally {

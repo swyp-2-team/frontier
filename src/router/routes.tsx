@@ -2,6 +2,7 @@ import HomePage from "@/pages/HomePage/HomePage";
 import IncidentMntPage from "@/pages/IncidentPage/IncidentMntPage";
 import IncidentMntDetailPage from "@/pages/IncidentPage/IncidentMntDetailPage";
 import IncidentRegisterPage from "@/pages/IncidentPage/IncidentRegisterPage";
+import IncidentVerificationPage from "@/pages/IncidentPage/IncidentVerificationPage";
 import LoginPage from "@/pages/LoginPage/LoginPage";
 import MntPage from "@/pages/MntPage/MntPage";
 import Layout from "@/shared/components/Layouts/Layout";
@@ -37,6 +38,15 @@ const router = createBrowserRouter([
         element: <Navigate to="/home" replace />,
       },
     ],
+  },
+  // 인시던트 확인 라우트 - 보호된 경로
+  {
+    path: "/incident-verification/:IncidentId",
+    element: (
+      <Protected>
+        <IncidentVerificationPage />
+      </Protected>
+    ),
   },
 ]);
 

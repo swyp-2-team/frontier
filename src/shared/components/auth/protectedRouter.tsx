@@ -5,17 +5,12 @@ import {
   validateSession,
   getUserInfo,
 } from "@/features/auth/api/auth";
-import Spinner from "@/shared/components/ui/Spinner";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRoles?: string[];
 }
 
-export function ProtectedRoute({
-  children,
-  requiredRoles = [],
-}: ProtectedRouteProps) {
+export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const [authState, setAuthState] = useState<{
     isChecking: boolean;
     isAuthenticated: boolean;
@@ -33,10 +28,11 @@ export function ProtectedRoute({
       try {
         // 로컬 인증 상태 확인
         if (isAuthenticated()) {
+          // 로컬 스토리지/세션 스토리지에서 인증 상태 확인
           if (isMounted) {
             setAuthState({
               isChecking: false,
-              isAuthenticated: false,
+              isAuthenticated: true,
             });
           }
           return;

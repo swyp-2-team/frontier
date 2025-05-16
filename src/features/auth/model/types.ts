@@ -1,5 +1,5 @@
 export interface LoginFormValues {
-  id: string;
+  email: string;
   password: string;
 }
 
@@ -7,7 +7,7 @@ export interface LoginFormState {
   isLoginChecked: boolean;
   pwIconChecked: boolean;
   errors: {
-    id: string;
+    email: string;
     password: string;
   };
   isSubmitting: boolean;

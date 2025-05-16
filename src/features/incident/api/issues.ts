@@ -1,4 +1,4 @@
-import { instance } from "@/shared/api/baseInstance";
+import instance from "@/shared/api/baseInstance";
 import { AxiosResponse } from "axios";
 
 import {
@@ -41,6 +41,7 @@ export const getIncidentDetail = async (
   const response: AxiosResponse<IncidentDetail> = await instance.get(
     `/api/incidents/${incidentId}`
   );
+  console.log("getIncidentDetail", response.data);
   return response.data;
 };
 

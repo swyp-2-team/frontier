@@ -41,7 +41,7 @@ const router = createBrowserRouter([
   },
   // 인시던트 확인 라우트 - 보호된 경로
   {
-    path: "/incident-verification/:IncidentId",
+    path: "/verify/:incidentId",
     element: (
       <Protected>
         <IncidentVerificationPage />

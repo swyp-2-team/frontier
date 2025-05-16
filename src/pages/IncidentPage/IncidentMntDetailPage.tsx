@@ -120,17 +120,14 @@ export default function IncidentMntDetailPage() {
   const confirmedUsers = incident?.groups.flatMap((group) =>
     group.members.filter((member) => member.isVerified)
   );
-  console.log(confirmedUsers);
 
   // 미확인 인원 명단이 담긴 배열
   const unconfirmedUsers = incident?.groups.flatMap((group) =>
     group.members.filter((member) => !member.isVerified)
   );
-  console.log(unconfirmedUsers);
 
   // 전체 인원
   const totalMembers = incident?.groups.flatMap((group) => group.members);
-  console.log(totalMembers);
 
   // 장애 상세 정보 로드
   useEffect(() => {

@@ -99,12 +99,11 @@ export function LoginForm({
   const handleLoginSuccess = () => {
     // 로그인 전에 저장된 리다이렉트 URL 확인
     const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
-    //console.log("리다이렉트 URL:", redirectUrl);
     // 리다이렉트 URL이 존재하면 해당 URL로 이동
+    sessionStorage.removeItem("redirectAfterLogin");
 
     if (redirectUrl) {
-      sessionStorage.removeItem("redirectAfterLogin");
-      window.location.href = redirectUrl; // 저장된 URL로 이동
+      navigate(redirectUrl);
     } else {
       // 리다이렉트 URL이 없으면 기본 페이지로 이동
       navigate("/home");

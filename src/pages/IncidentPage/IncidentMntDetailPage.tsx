@@ -13,6 +13,8 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import axios from "@/shared/api/baseInstance";
 import Spinner from "@/shared/components/ui/Spinner";
+import { IncidentDetailType } from "@/shared/types/incident";
+import { formatDate } from "@/shared/lib/formatDate";
 
 // 템플릿 내용용 타입 정의
 interface TemplateContent {
@@ -62,20 +64,6 @@ const TEMPLATE_MOCKUP: Record<string, IncidentDetail> = {
   },
 };
 
-// 확인/미확인 인원 MOCKUP
-const CHECK_LIST_MOCKUP = [
-  { id: 1, name: "문성욱", status: "확인" },
-  { id: 2, name: "신재이", status: "확인" },
-  { id: 3, name: "박재호", status: "확인" },
-  { id: 4, name: "강영훈", status: "미확인" },
-  { id: 5, name: "강진수", status: "미확인" },
-  { id: 6, name: "김지민", status: "미확인" },
-  { id: 7, name: "김민형", status: "미확인" },
-  { id: 8, name: "하츄핑", status: "미확인" },
-  { id: 9, name: "안경핑", status: "미확인" },
-  { id: 10, name: "아잉핑", status: "미확인" },
-];
-
 // 댓글 MOCKUP
 const COMMENTS_MOCKUP: Comment[] = [
   {
@@ -115,17 +103,31 @@ export default function IncidentMntDetailPage() {
   const [status, setStatus] = useState<"active" | "completed">("completed");
   const [comments, setComments] = useState<Comment[]>(COMMENTS_MOCKUP);
 
+  // 장애 상세 정보 fetching
+  const { data: incident, isLoading } = useQuery({
+    queryKey: ["incidents", incidentId],
+    queryFn: () =>
+      axios.get<IncidentDetailType>(`/api/incidents/${incidentId}`),
+    select: (res) => res.data,
+    refetchInterval: 10 * 1000, // 10초마다 자동 요청
+  });
+
   // 확인/미확인 목록 컨테이너에 대한 참조 생성
   const confirmedListRef = useRef<HTMLDivElement>(null);
   const unconfirmedListRef = useRef<HTMLDivElement>(null);
 
-  // 확인/미확인 인원 분리
-  const confirmedUsers = CHECK_LIST_MOCKUP.filter(
-    (user) => user.status === "확인"
+  // 확인 인원 명단이 담긴 배열
+  const confirmedUsers = incident?.groups.flatMap((group) =>
+    group.members.filter((member) => member.isVerified)
   );
-  const unconfirmedUsers = CHECK_LIST_MOCKUP.filter(
-    (user) => user.status === "미확인"
+
+  // 미확인 인원 명단이 담긴 배열
+  const unconfirmedUsers = incident?.groups.flatMap((group) =>
+    group.members.filter((member) => !member.isVerified)
   );
+
+  // 전체 인원
+  const totalMembers = incident?.groups.flatMap((group) => group.members);
 
   // 장애 상세 정보 로드
   useEffect(() => {
@@ -154,15 +156,8 @@ export default function IncidentMntDetailPage() {
     return () => {
       window.removeEventListener("resize", calculateHeight);
     };
-  }, [confirmedUsers.length, unconfirmedUsers.length]);
+  }, [confirmedUsers?.length, unconfirmedUsers?.length]);
 
-  // 장애 상세 정보 fetching
-  const { data: incident, isLoading } = useQuery({
-    queryKey: ["incidents", incidentId],
-    queryFn: () => axios.get<IncidentDetail>(`/api/incidents/${incidentId}`),
-    select: (res) => res.data,
-    refetchInterval: 10 * 1000, // 10초마다 자동 요청
-  });
   if (incident) console.log(incident);
 
   const handleGoBack = () => {
@@ -201,179 +196,191 @@ export default function IncidentMntDetailPage() {
           <Spinner />
         </div>
       ) : (
-        <div className="px-6 w-full">
-          <div className="flex flex-row justify-between items-center mb-4">
-            <Breadcrumb className="self-start mb-[38px]">
-              <BreadcrumbList className="body-13 text-gray-800">
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to="/home">홈</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild className="body-13 text-gray-800">
-                    <Link to="/incident-mnt">장애관리</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild className="body-13_SB text-black">
-                    <Link to={`/incident-mnt/${incidentId}`}>장애 상세</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-            <button
-              onClick={handleGoBack}
-              className="flex justify-self-end mb-4"
-            >
-              <OutIcon className={cn("w-8 h-8")} />
-            </button>
-          </div>
-          <div className="flex justify-between mb-4">
-            <div className="flex gap-25">
-              <div className="flex flex-col justify-start items-start mb-2 gap-2.5 title-20_SB text-gray-600">
-                제목
-                <span className="title-24_SB text-gray-800">
-                  {incidentDetail?.title}
-                </span>
+        <>
+          {incident && (
+            <div className="px-6 w-full">
+              <div className="flex flex-row justify-between items-center mb-4">
+                <Breadcrumb className="self-start mb-[38px]">
+                  <BreadcrumbList className="body-13 text-gray-800">
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild>
+                        <Link to="/home">홈</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild className="body-13 text-gray-800">
+                        <Link to="/incident-mnt">장애관리</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild className="body-13_SB text-black">
+                        <Link to={`/incident-mnt/${incidentId}`}>
+                          장애 상세
+                        </Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+                <button
+                  onClick={handleGoBack}
+                  className="flex justify-self-end mb-4"
+                >
+                  <OutIcon className={cn("w-8 h-8")} />
+                </button>
               </div>
-              <div className="flex flex-col justify-start items-start gap-2.5 title-20_SB text-gray-600 pl-8 border-l-2 border-gray-400">
-                전파 시간
-                <span className="title-18 text-gray-800">
-                  {incidentDetail?.propagationTime}
-                </span>
+              <div className="flex justify-between mb-4">
+                <div className="flex gap-25">
+                  <div className="flex flex-col justify-start items-start mb-2 gap-2.5 title-20_SB text-gray-600">
+                    제목
+                    <span className="title-24_SB text-gray-800">
+                      {incident.title}
+                    </span>
+                  </div>
+                  <div className="flex flex-col justify-start items-start gap-2.5 title-20_SB text-gray-600 pl-8 border-l-2 border-gray-400">
+                    전파 시간
+                    <span className="title-18 text-gray-800">
+                      {formatDate(incident.registrationTime)}
+                    </span>
+                  </div>
+                  <div className="flex flex-col justify-start items-start gap-2.5 title-20_SB text-gray-600 pl-8 border-l-2 border-gray-400">
+                    진행 상태
+                    <span className="title-18 text-primary">
+                      {incident.closingTime ? "처리완료" : "진행중"}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={toggleStatus}
+                  className={`text-white w-[156px] h-[48px] rounded-xl my-3 ${
+                    incident.closingTime ? "bg-[#eb5757]" : "bg-green-600"
+                  }`}
+                >
+                  {incident.closingTime ? "상황재개" : "처리완료"}
+                </button>
               </div>
-              <div className="flex flex-col justify-start items-start gap-2.5 title-20_SB text-gray-600 pl-8 border-l-2 border-gray-400">
-                진행 상태
-                <span className="title-18 text-primary">
-                  {status === "completed" ? "처리완료" : "진행중"}
-                </span>
-              </div>
-            </div>
-            <button
-              onClick={toggleStatus}
-              className={`text-white w-[156px] h-[48px] rounded-xl my-3 ${
-                status === "completed" ? "bg-[#eb5757]" : "bg-green-600"
-              }`}
-            >
-              {status === "completed" ? "상황재개" : "처리완료"}
-            </button>
-          </div>
 
-          {/* 템플릿 내용 및 확인 인원 영역 */}
-          <div className="flex flex-row gap-10 my-4">
-            {/* 왼쪽 - 템플릿 내용 */}
-            <div className="flex-2">
-              <div className="title-18_SB text-gray-600 mb-3">템플릿 내용</div>
-              <div className="py-8 pl-12 pr-14 bg-white rounded-xl h-9/10 overflow-y-auto">
-                <div className="flex flex-col gap-6">
-                  <div className="flex flex-col gap-4">
-                    <div className="flex">
-                      <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
-                        1. 장애 발생 시간 :{" "}
-                      </span>
-                      <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
-                        {incidentDetail.templateContent.incidentTime}
-                      </span>
+              {/* 템플릿 내용 및 확인 인원 영역 */}
+              <div className="flex flex-row gap-10 my-4">
+                {/* 왼쪽 - 템플릿 내용 */}
+                <div className="flex-2">
+                  <div className="title-18_SB text-gray-600 mb-3">
+                    템플릿 내용
+                  </div>
+                  <div className="py-8 pl-12 pr-14 bg-white rounded-xl h-9/10 overflow-y-auto">
+                    <div className="flex flex-col gap-6">
+                      <div className="flex flex-col gap-4">
+                        <div className="flex">
+                          <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
+                            1. 장애 발생 시간 :{" "}
+                          </span>
+                          <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
+                            {incidentDetail.templateContent.incidentTime}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <div className="flex">
+                          <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
+                            2. 장애 확인 경로 :{" "}
+                          </span>
+                          <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
+                            {incidentDetail.templateContent.detectionPath}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <div className="flex">
+                          <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
+                            3. 장애 증상 :{" "}
+                          </span>
+                          <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
+                            {incidentDetail.templateContent.symptoms}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <div className="flex">
+                          <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
+                            4. 영향 범위 :
+                          </span>
+                          <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
+                            {incidentDetail.templateContent.impact}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-4">
-                    <div className="flex">
-                      <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
-                        2. 장애 확인 경로 :{" "}
-                      </span>
-                      <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
-                        {incidentDetail.templateContent.detectionPath}
-                      </span>
-                    </div>
+                </div>
+
+                {/* 오른쪽 - 확인 인원 */}
+                <div className="flex-1">
+                  <div className="flex flex-row justify-between title-20_SB text-gray-600 mb-2">
+                    <span>확인 인원</span>
+                    <span>
+                      <span className="text-primary">
+                        {confirmedUsers?.length}
+                      </span>{" "}
+                      / {totalMembers?.length}
+                    </span>
                   </div>
-                  <div className="flex flex-col gap-4">
-                    <div className="flex">
-                      <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
-                        3. 장애 증상 :{" "}
-                      </span>
-                      <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
-                        {incidentDetail.templateContent.symptoms}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-4">
-                    <div className="flex">
-                      <span className="body-18_SB text-gray-800 whitespace-nowrap mr-2">
-                        4. 영향 범위 :
-                      </span>
-                      <span className="body-18_LH32 text-gray-700 break-words whitespace-pre-wrap grow max-w-full">
-                        {incidentDetail.templateContent.impact}
-                      </span>
+                  <div className="py-8 px-8 bg-white rounded-xl h-9/10 overflow-y-auto">
+                    <div className="flex flex-row gap-12 relative">
+                      {/* 확인 컬럼 */}
+                      <div className="flex-1 justify-items-center">
+                        <div className="body-16_SB text-black my-4">확인</div>
+                        <div className="space-y-3" ref={confirmedListRef}>
+                          {confirmedUsers?.map((user) => (
+                            <div
+                              key={user.id}
+                              className="flex items-center gap-2 text-black"
+                            >
+                              <span className="body-18">{user.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* 구분선 - 이름 목록 길이에 맞춤 (동적 높이) */}
+                      <div
+                        className="w-px bg-gray-400 rounded-md absolute left-1/2 transform -translate-x-1/2"
+                        style={{
+                          top: "3.5rem",
+                          height: `${dividerHeight}px`,
+                        }}
+                      ></div>
+
+                      {/* 미확인 컬럼 */}
+                      <div className="flex-1 justify-items-center">
+                        <div className="body-16_SB text-gray-400 my-4">
+                          미확인
+                        </div>
+                        <div className="space-y-3" ref={unconfirmedListRef}>
+                          {unconfirmedUsers?.map((user) => (
+                            <div
+                              key={user.id}
+                              className="flex items-center gap-2 text-gray-400"
+                            >
+                              <span className="body-18">{user.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+              {/* 댓글 섹션 - 새로운 컴포넌트 사용 */}
+              <CommentSection
+                comments={comments}
+                onAddComment={handleAddComment}
+                currentUser="신재이" // 현재 로그인한 사용자 이름을 prop으로 전달
+              />
             </div>
-
-            {/* 오른쪽 - 확인 인원 */}
-            <div className="flex-1">
-              <div className="flex flex-row justify-between title-20_SB text-gray-600 mb-2">
-                <span>확인 인원</span>
-                <span>
-                  <span className="text-primary">{confirmedUsers.length}</span>{" "}
-                  / {CHECK_LIST_MOCKUP.length}
-                </span>
-              </div>
-              <div className="py-8 px-8 bg-white rounded-xl h-9/10 overflow-y-auto">
-                <div className="flex flex-row gap-12 relative">
-                  {/* 확인 컬럼 */}
-                  <div className="flex-1 justify-items-center">
-                    <div className="body-16_SB text-black my-4">확인</div>
-                    <div className="space-y-3" ref={confirmedListRef}>
-                      {confirmedUsers.map((user) => (
-                        <div
-                          key={user.id}
-                          className="flex items-center gap-2 text-black"
-                        >
-                          <span className="body-18">{user.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* 구분선 - 이름 목록 길이에 맞춤 (동적 높이) */}
-                  <div
-                    className="w-px bg-gray-400 rounded-md absolute left-1/2 transform -translate-x-1/2"
-                    style={{
-                      top: "3.5rem",
-                      height: `${dividerHeight}px`,
-                    }}
-                  ></div>
-
-                  {/* 미확인 컬럼 */}
-                  <div className="flex-1 justify-items-center">
-                    <div className="body-16_SB text-gray-400 my-4">미확인</div>
-                    <div className="space-y-3" ref={unconfirmedListRef}>
-                      {unconfirmedUsers.map((user) => (
-                        <div
-                          key={user.id}
-                          className="flex items-center gap-2 text-gray-400"
-                        >
-                          <span className="body-18">{user.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 댓글 섹션 - 새로운 컴포넌트 사용 */}
-          <CommentSection
-            comments={comments}
-            onAddComment={handleAddComment}
-            currentUser="신재이" // 현재 로그인한 사용자 이름을 prop으로 전달
-          />
-        </div>
+          )}
+        </>
       )}
     </>
   );

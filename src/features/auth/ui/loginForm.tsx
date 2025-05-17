@@ -33,10 +33,7 @@ export function LoginForm({
   const [state, setState] = useState({
     isLoginChecked: false,
     pwIconChecked: false,
-    errors: {
-      email: "",
-      password: "",
-    },
+    errors: "",
     isSubmitting: false,
   });
 
@@ -59,10 +56,7 @@ export function LoginForm({
     if (state.errors[name as keyof typeof state.errors]) {
       setState((prev) => ({
         ...prev,
-        errors: {
-          ...prev.errors,
-          [name]: "",
-        },
+        errors: "",
       }));
     }
   };
@@ -77,7 +71,7 @@ export function LoginForm({
       //console.log("로그인 성공:", response);
       setState((prev) => ({
         ...prev,
-        errors: { email: "", password: "" },
+        errors: "",
         isSubmitting: false,
       }));
 
@@ -86,10 +80,7 @@ export function LoginForm({
       console.error("로그인 실패:", error);
       setState((prev) => ({
         ...prev,
-        errors: {
-          email: "이메일이 일치하지 않습니다.",
-          password: "비밀번호가 일치하지 않습니다.",
-        },
+        errors: "Email 또는 Password가 일치하지 않습니다.",
         isSubmitting: false,
       }));
     }
@@ -132,11 +123,8 @@ export function LoginForm({
                   onChange={handleInputChange}
                   value={formValues.email}
                   required
-                  aria-invalid={!!state.errors.email}
+                  aria-invalid={!!state.errors}
                 />
-                {state.errors.email && (
-                  <LoginError errorText={state.errors.email} />
-                )}
               </div>
               <div className="grid gap-1.5 mb-5">
                 <div className="flex items-center">
@@ -152,7 +140,7 @@ export function LoginForm({
                     value={formValues.password}
                     required
                     className="pr-10"
-                    aria-invalid={!!state.errors.password}
+                    aria-invalid={!!state.errors}
                   />
                   <div
                     className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
@@ -165,14 +153,14 @@ export function LoginForm({
                     )}
                   </div>
                 </div>
-                {state.errors.password && (
-                  <LoginError errorText={state.errors.password} />
+                {state.errors && (
+                  <LoginError errorText={state.errors} />
                 )}
               </div>
               <div className="pl-2.5 flex items-start">
                 <CheckBox
                   isChecked={state.isLoginChecked}
-                  label="로그인 상태 유지"
+                  label="Email 기억하기"
                   onChange={() => toggleState("isLoginChecked")}
                 />
               </div>

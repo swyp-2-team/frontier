@@ -5,6 +5,6 @@ import axios from "./baseInstance";
  * @param id incident ID
  * @param completion true: 처리완료, false: 상황재개
  */
-export const updateIncidentStatus = (id: string, completion: boolean) => {
+export const incidentStatusUpdate = (id: string, completion: boolean) => {
   return axios.patch(`/api/incidents/${id}`, { completion });
 };

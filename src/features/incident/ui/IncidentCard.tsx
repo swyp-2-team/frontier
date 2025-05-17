@@ -21,7 +21,7 @@ export default function IncidentCard({
 }: IncidentCardProps) {
   return (
     <article className="bg-white rounded-[12px] py-5 2xl:py-7 px-15 2xl:px-22 flex items-center">
-      <section className="flex items-start gap-13 2xl:gap-20 border-r-2 border-gray-300 pr-12 2xl:pr-18 pt-[30px] pb-9">
+      <section className="flex items-center gap-13 2xl:gap-20 border-r-2 border-gray-300 pr-12 2xl:pr-18 pt-[30px] pb-9">
         <div className="min-w-[100px]">
           {/* isActive 속성에 따라 배지 변형 결정 */}
           <Badge variant={isActive ? "default" : "tertiary"}>{groupName}</Badge>

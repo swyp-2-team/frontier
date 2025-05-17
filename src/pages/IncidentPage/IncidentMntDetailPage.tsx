@@ -16,7 +16,7 @@ import axios from "@/shared/api/baseInstance";
 import Spinner from "@/shared/components/ui/Spinner";
 import { IncidentDetailType } from "@shared/types/incident";
 import { formatDate } from "@/shared/lib/formatDate";
-import { updateIncidentStatus } from "@/shared/api/incidentStatusUpdate";
+import { incidentStatusUpdate } from "@/shared/api/incidentstatusupdate";
 import TemplateSection from "@/features/incident/ui/TemplateSection";
 
 const COMMENTS_MOCKUP: Comment[] = [
@@ -45,9 +45,9 @@ export default function IncidentMntDetailPage() {
 
   if (incident) console.log(incident);
 
-  const { mutate, isLoading: isMutating } = useMutation({
+  const { mutate, isPending: isMutating } = useMutation({
     mutationFn: (completion: boolean) =>
-      updateIncidentStatus(incidentId!, completion),
+      incidentStatusUpdate(incidentId!, completion),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["incidents", incidentId] });
     },

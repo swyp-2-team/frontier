@@ -13,6 +13,7 @@ export interface IncidentDetailType {
   bucket: string;
   s3Uuid: string;
   title: string;
+  rawBody: string;
   registrationTime: string;
   closingTime: string | null;
   groups: {

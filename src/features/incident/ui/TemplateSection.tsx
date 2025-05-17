@@ -1,7 +1,9 @@
 import { parseRawBodyToSections } from "@shared/lib/parseRawBodyToSections";
 
 export default function TemplateSection({ rawBody }: { rawBody: string }) {
-  const parsedSections = parseRawBodyToSections(rawBody);
+  let parsedSections = null;
+  
+  if (rawBody !== null) parsedSections = parseRawBodyToSections(rawBody);
 
   const fallbackSectionHeaders = [
     "1. 장애 발생 시간 :",
@@ -19,7 +21,7 @@ export default function TemplateSection({ rawBody }: { rawBody: string }) {
               {header}
             </span>
             <div className="body-18_LH32 text-gray-700 whitespace-pre-wrap break-words grow max-w-full">
-              {parsedSections[header]}
+              {parsedSections == null ? null : parsedSections[header]}
             </div>
           </div>
         </div>

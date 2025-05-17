@@ -194,14 +194,6 @@ export default function IncidentMntDetailPage() {
                     </div>
                   ))}
                 </div>
-                <button
-                  onClick={toggleStatus}
-                  className={`text-white w-[156px] h-[48px] rounded-xl my-3 ${
-                    incident.closingTime ? "bg-[#eb5757]" : "bg-green-600"
-                  }`}
-                >
-                  {incident.closingTime ? "상황재개" : "처리완료"}
-                </button>
               </div>
               <div
                 className="w-px bg-gray-400 rounded-md absolute left-1/2 transform -translate-x-1/2"

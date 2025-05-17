@@ -43,7 +43,7 @@ export default function IncidentMntDetailPage() {
     refetchInterval: 10 * 1000,
   });
 
-  if (incident) console.log(incident);
+  //if (incident) console.log(incident);
 
   const { mutate, isPending: isMutating } = useMutation({
     mutationFn: (completion: boolean) =>

@@ -7,20 +7,20 @@ import { verifyIncident } from "@/features/auth/api/verifyingIncident";
 export const handleVerification = async (incidentId: number) => {
   try {
     if (!incidentId) {
-      console.error("인시던트 ID가 없습니다.");
+      //console.error("인시던트 ID가 없습니다.");
       return;
     }
 
     // incidentId를 문자열로 변환
     const stringId = incidentId.toString();
-    console.log("인시던트 확인 요청:", { originalId: incidentId, stringId });
+    //console.log("인시던트 확인 요청:", { originalId: incidentId, stringId });
 
     // API 호출
     const response = await verifyIncident({
       incidentId: stringId, // 문자열로 변환하여 전송
     });
 
-    console.log("인시던트 확인 응답:", response);
+    //console.log("인시던트 확인 응답:", response);
 
     // 응답이 verified이면 창 닫기
     if (response.status === "verified") {

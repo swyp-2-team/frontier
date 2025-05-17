@@ -24,8 +24,6 @@ export default function LogoutButton() {
       await authApi.logout();
       navigate("/");
     } catch (error) {
-      // 에러 처리
-      console.error("로그아웃 오류:", error);
       // 오류가 발생해도 로컬 인증 정보는 삭제
       performLocalLogout();
       // 오류가 발생해도 로그인 페이지로 리다이렉트

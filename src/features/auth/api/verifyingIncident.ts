@@ -26,14 +26,9 @@ export const verifyIncident = async (
     throw new Error("인시던트 ID가 필요합니다");
   }
 
-  try {
-    const response: AxiosResponse<VerifyIncidentResponse> =
-      await instance.patch(`/api/incidents/verify/${request.incidentId}`);
+  const response = await instance.patch<VerifyIncidentResponse>(
+    `/api/incidents/verify/${request.incidentId}`
+  );
 
-    //console.log("API 응답 성공:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error("API 요청 실패:", error);
-    throw error;
-  }
+  return response.data;
 };

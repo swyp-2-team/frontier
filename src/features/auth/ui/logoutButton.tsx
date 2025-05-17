@@ -42,7 +42,7 @@ export default function LogoutButton() {
       <button
         onClick={handleLogout}
         disabled={isLoggingOut}
-        className="self-stretch h-6 px-1.5 py-1 bg-gray-300 rounded-lg inline-flex justify-center items-center"
+        className="self-stretch h-6 px-1.5 py-1 bg-gray-300 rounded-lg inline-flex justify-center items-center cursor-pointer"
       >
         <div className="body-13 justify-start text-gray-900 leading-none">
           로그아웃

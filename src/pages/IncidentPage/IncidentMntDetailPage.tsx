@@ -132,7 +132,10 @@ export default function IncidentMntDetailPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <button onClick={handleGoBack} className="flex justify-self-end mb-4">
+        <button
+          onClick={handleGoBack}
+          className="flex justify-self-end mb-4 cursor-pointer"
+        >
           <OutIcon className={cn("w-8 h-8")} />
         </button>
       </div>
@@ -159,7 +162,7 @@ export default function IncidentMntDetailPage() {
         <button
           onClick={toggleStatus}
           disabled={isMutating}
-          className={`text-white w-[156px] h-[48px] rounded-xl my-3 ${
+          className={`text-white w-[156px] h-[48px] rounded-xl my-3 cursor-pointer ${
             incident.closingTime ? "bg-[#eb5757]" : "bg-green-600"
           }`}
         >

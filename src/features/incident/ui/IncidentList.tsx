@@ -30,7 +30,7 @@ export default function IncidentList({
         <div className="text-center py-8 text-gray-500">
           {showActive
             ? "현재 진행 중인 장애가 없습니다."
-            : "장애 히스토리가 없습니다."}
+            : "장애 이력이 없습니다."}
         </div>
       ) : (
         <>{incidentList}</>

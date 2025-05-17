@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const tabs = [
   { label: "진행 중인 장애", value: "active" }, // 'processing'에서 'active'로 변경
-  { label: "장애 히스토리", value: "history" },
+  { label: "종료된 장애", value: "history" },
 ];
 
 interface ToggleSelectProps {

@@ -42,7 +42,7 @@ export default function CommentSection({
 
   return (
     <div>
-      <div className="title-18_SB text-[#4d5358] mb-2">Comments</div>
+      <div className="flex flex-row justify-between title-20_SB text-gray-600 mb-2">Comments</div>
       <div className="bg-white rounded-xl py-7 px-4 shadow-sm">
         {comments.length === 0 ? (
           <div className="text-center py-6 text-gray-500">

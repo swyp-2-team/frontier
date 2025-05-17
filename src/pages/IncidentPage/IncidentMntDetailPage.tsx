@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import OutIcon from "@/assets/icons/out.svg?react";
 import CommentSection, { Comment } from "@/features/incident/ui/CommentSection";
@@ -13,6 +13,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import axios from "@/shared/api/baseInstance";
 import Spinner from "@/shared/components/ui/Spinner";
+import { useNavigate } from "react-router-dom";
 import { IncidentDetailType } from "@/shared/types/incident";
 import { formatDate } from "@/shared/lib/formatDate";
 
@@ -161,7 +162,7 @@ export default function IncidentMntDetailPage() {
   if (incident) console.log(incident);
 
   const handleGoBack = () => {
-    navigate(-1); // 이전 페이지로 이동
+    navigate("/incident-mnt"); // 이전 페이지로 이동
   };
 
   const handleAddComment = (content: string) => {

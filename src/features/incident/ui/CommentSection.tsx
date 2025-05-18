@@ -42,7 +42,9 @@ export default function CommentSection({
 
   return (
     <div>
-      <div className="flex flex-row justify-between title-20_SB text-gray-600 mb-2">Comments</div>
+      <div className="flex flex-row justify-between title-20_SB text-gray-600 mb-2">
+        Comments
+      </div>
       <div className="bg-white rounded-xl py-7 px-4 shadow-sm">
         {comments.length === 0 ? (
           <div className="text-center py-6 text-gray-500">
@@ -54,7 +56,7 @@ export default function CommentSection({
               <div key={comment.id}>
                 <div className="flex justify-start items-center gap-2 mb-1">
                   <span className="body-16 text-gray-700">
-                    <Profile username={comment.author} />
+                    <Profile />
                   </span>
                   <span className="text-sm text-gray-500">{comment.time}</span>
                 </div>
@@ -72,7 +74,7 @@ export default function CommentSection({
             className="flex items-center pl-4 absolute left-0 top-0 h-full"
           >
             <span className="text-gray-700">
-              <Profile username={currentUser} className="text-sm" />
+              <Profile className="text-sm" />
             </span>
           </div>
           <input

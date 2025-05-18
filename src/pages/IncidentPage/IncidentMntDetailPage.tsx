@@ -35,7 +35,7 @@ export default function IncidentMntDetailPage() {
   const [comments, setComments] = useState<Comment[]>(COMMENTS_MOCKUP);
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertInfo, setAlertInfo] = useState({
-    type: "success" as const,
+    type: "success" as "success" | "warning",
     description: "",
   });
 
@@ -146,7 +146,7 @@ export default function IncidentMntDetailPage() {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild className="body-16_SB text-black">
-                <Link to={`/incident-mnt/${incidentId}`}>장애 상세</Link>
+                <Link to={`/incident-mnt/${incidentId}`}>상세보기</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>

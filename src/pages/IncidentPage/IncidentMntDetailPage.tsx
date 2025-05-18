@@ -17,6 +17,7 @@ import { IncidentDetailType } from "@shared/types/incident";
 import { formatDate } from "@/shared/lib/formatDate";
 import { incidentStatusUpdate } from "@/shared/api/incidentstatusupdate";
 import TemplateSection from "@/features/incident/ui/TemplateSection";
+import { AlertDialog } from "@/shared/components/ui/alertdialog";
 
 const COMMENTS_MOCKUP: Comment[] = [
   {
@@ -32,6 +33,11 @@ export default function IncidentMntDetailPage() {
   const { incidentId } = useParams<{ incidentId: string }>();
   const [dividerHeight, setDividerHeight] = useState(0);
   const [comments, setComments] = useState<Comment[]>(COMMENTS_MOCKUP);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertInfo, setAlertInfo] = useState({
+    type: "success" as const,
+    description: "",
+  });
 
   const queryClient = useQueryClient();
 
@@ -43,17 +49,30 @@ export default function IncidentMntDetailPage() {
     refetchInterval: 10 * 1000,
   });
 
-  //if (incident) console.log(incident);
-
   const { mutate, isPending: isMutating } = useMutation({
     mutationFn: (completion: boolean) =>
       incidentStatusUpdate(incidentId!, completion),
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ["incidents", incidentId] });
+
+      const statusMessage = data.closingTime
+        ? "장애가 처리완료 상태로 변경되었습니다."
+        : "장애가 진행중 상태로 재개되었습니다.";
+
+      setAlertInfo({
+        type: "success",
+        description: statusMessage,
+      });
+      setAlertOpen(true);
     },
     onError: (error) => {
       console.error("장애 상태 변경 실패:", error);
-      alert("장애 상태 변경에 실패했습니다.");
+
+      setAlertInfo({
+        type: "warning",
+        description: "장애 상태 변경에 실패했습니다.",
+      });
+      setAlertOpen(true);
     },
   });
 
@@ -166,7 +185,11 @@ export default function IncidentMntDetailPage() {
             incident.closingTime ? "bg-[#eb5757]" : "bg-green-600"
           }`}
         >
-          {incident.closingTime ? "상황재개" : "처리완료"}
+          {isMutating
+            ? "처리 중..."
+            : incident.closingTime
+            ? "상황재개"
+            : "처리완료"}
         </button>
       </div>
 
@@ -229,6 +252,13 @@ export default function IncidentMntDetailPage() {
         comments={comments}
         onAddComment={handleAddComment}
         currentUser="Noticore User"
+      />
+
+      <AlertDialog
+        open={alertOpen}
+        onOpenChange={setAlertOpen}
+        type={alertInfo.type}
+        description={alertInfo.description}
       />
     </div>
   );

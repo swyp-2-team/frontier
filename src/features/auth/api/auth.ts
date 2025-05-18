@@ -3,11 +3,7 @@ import { LoginFormValues } from "@/features/auth/model/types";
 import { AxiosResponse } from "axios";
 
 export interface LoginResponse {
-  user: {
-    id: string;
-    username: string;
-    email: string;
-  };
+  name: string;
 }
 
 /**
@@ -27,9 +23,9 @@ export const login = async (
   localStorage.setItem("isAuthenticated", "true");
 
   // 사용자 객체는 필요한 경우에만 공개 필드만 저장 (선택적)
-  if (response.data && response.data.user) {
-    const { username } = response.data.user; // 필요한 공개 정보만 추출
-    localStorage.setItem("userInfo", JSON.stringify({ username }));
+  if (response.data && response.data.name) {
+    const username = response.data.name; // name 자체가 username이므로 직접 할당
+    localStorage.setItem("userInfo", username);
   }
 
   return response.data;
@@ -39,15 +35,9 @@ export const login = async (
  * 로그아웃 API
  */
 export const logout = async (): Promise<void> => {
-  try {
-    // 서버에 로그아웃 요청
-    await instance.post("/api/auth/logout");
-    console.log("로그아웃 성공");
-  } catch (error) {
-    console.error("로그아웃 API 호출 실패:", error);
-    // 에러를 다시 던져서 호출자가 처리하게 함
-    throw error;
-  }
+  // 서버에 로그아웃 요청
+  await instance.post("/api/auth/logout");
+  //console.log("로그아웃 성공");
 };
 
 /**

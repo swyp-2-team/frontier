@@ -41,7 +41,7 @@ export const getIncidentDetail = async (
   const response: AxiosResponse<IncidentDetail> = await instance.get(
     `/api/incidents/${incidentId}`
   );
-  console.log("getIncidentDetail", response.data);
+  //console.log("getIncidentDetail", response.data);
   return response.data;
 };
 

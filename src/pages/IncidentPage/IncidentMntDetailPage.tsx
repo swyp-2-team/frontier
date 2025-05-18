@@ -1,4 +1,3 @@
-
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import OutIcon from "@/assets/icons/out.svg?react";
@@ -18,6 +17,7 @@ import { IncidentDetailType } from "@shared/types/incident";
 import { formatDate } from "@/shared/lib/formatDate";
 import { incidentStatusUpdate } from "@/shared/api/incidentstatusupdate";
 import TemplateSection from "@/features/incident/ui/TemplateSection";
+import { AlertDialog } from "@/shared/components/ui/alertdialog";
 
 const COMMENTS_MOCKUP: Comment[] = [
   {
@@ -33,27 +33,46 @@ export default function IncidentMntDetailPage() {
   const { incidentId } = useParams<{ incidentId: string }>();
   const [dividerHeight, setDividerHeight] = useState(0);
   const [comments, setComments] = useState<Comment[]>(COMMENTS_MOCKUP);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertInfo, setAlertInfo] = useState({
+    type: "success" as "success" | "warning",
+    description: "",
+  });
 
   const queryClient = useQueryClient();
 
   const { data: incident, isLoading } = useQuery({
     queryKey: ["incidents", incidentId],
-    queryFn: () => axios.get<IncidentDetailType>(`/api/incidents/${incidentId}`),
+    queryFn: () =>
+      axios.get<IncidentDetailType>(`/api/incidents/${incidentId}`),
     select: (res) => res.data,
     refetchInterval: 10 * 1000,
   });
 
-  if (incident) console.log(incident);
-
   const { mutate, isPending: isMutating } = useMutation({
     mutationFn: (completion: boolean) =>
       incidentStatusUpdate(incidentId!, completion),
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ["incidents", incidentId] });
+
+      const statusMessage = data.closingTime
+        ? "장애가 처리완료 상태로 변경되었습니다."
+        : "장애가 진행중 상태로 재개되었습니다.";
+
+      setAlertInfo({
+        type: "success",
+        description: statusMessage,
+      });
+      setAlertOpen(true);
     },
     onError: (error) => {
       console.error("장애 상태 변경 실패:", error);
-      alert("장애 상태 변경에 실패했습니다.");
+
+      setAlertInfo({
+        type: "warning",
+        description: "장애 상태 변경에 실패했습니다.",
+      });
+      setAlertOpen(true);
     },
   });
 
@@ -112,7 +131,7 @@ export default function IncidentMntDetailPage() {
     <div className="px-6 w-full">
       <div className="flex flex-row justify-between items-center mb-4">
         <Breadcrumb className="self-start mb-[38px]">
-          <BreadcrumbList className="body-13 text-gray-800">
+          <BreadcrumbList className="text-gray-800">
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
                 <Link to="/home">홈</Link>
@@ -120,19 +139,22 @@ export default function IncidentMntDetailPage() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink asChild className="body-13 text-gray-800">
+              <BreadcrumbLink asChild>
                 <Link to="/incident-mnt">장애관리</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink asChild className="body-13_SB text-black">
-                <Link to={`/incident-mnt/${incidentId}`}>장애 상세</Link>
+              <BreadcrumbLink asChild className="body-16_SB text-black">
+                <Link to={`/incident-mnt/${incidentId}`}>상세보기</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <button onClick={handleGoBack} className="flex justify-self-end mb-4">
+        <button
+          onClick={handleGoBack}
+          className="flex justify-self-end mb-4 cursor-pointer"
+        >
           <OutIcon className={cn("w-8 h-8")} />
         </button>
       </div>
@@ -159,28 +181,34 @@ export default function IncidentMntDetailPage() {
         <button
           onClick={toggleStatus}
           disabled={isMutating}
-          className={`text-white w-[156px] h-[48px] rounded-xl my-3 ${
+          className={`text-white w-[156px] h-[48px] rounded-xl my-3 cursor-pointer ${
             incident.closingTime ? "bg-[#eb5757]" : "bg-green-600"
           }`}
         >
-          {incident.closingTime ? "상황재개" : "처리완료"}
+          {isMutating
+            ? "처리 중..."
+            : incident.closingTime
+            ? "상황재개"
+            : "처리완료"}
         </button>
       </div>
 
       <div className="flex flex-row gap-10 my-4">
         <div className="flex-2">
-          <div className="flex flex-row justify-between title-20_SB text-gray-600 mb-2">템플릿 내용</div>
+          <div className="flex flex-row justify-between title-20_SB text-gray-600 mb-2">
+            템플릿 내용
+          </div>
           <div className="py-8 pl-12 pr-14 bg-white rounded-xl h-9/10 overflow-y-auto">
             <TemplateSection rawBody={incident.rawBody} />
           </div>
         </div>
 
-
         <div className="flex-1">
           <div className="flex flex-row justify-between title-20_SB text-gray-600 mb-2">
             <span>확인 인원</span>
             <span>
-              <span className="text-primary">{confirmedUsers?.length}</span> / {totalMembers?.length}
+              <span className="text-primary">{confirmedUsers?.length}</span> /{" "}
+              {totalMembers?.length}
             </span>
           </div>
           <div className="py-8 px-8 bg-white rounded-xl h-9/10 overflow-y-auto">
@@ -189,7 +217,10 @@ export default function IncidentMntDetailPage() {
                 <div className="body-16_SB text-black my-4">확인</div>
                 <div className="space-y-3" ref={confirmedListRef}>
                   {confirmedUsers?.map((user) => (
-                    <div key={user.id} className="flex items-center gap-2 text-black">
+                    <div
+                      key={user.id}
+                      className="flex items-center gap-2 text-black"
+                    >
                       <span className="body-18">{user.name}</span>
                     </div>
                   ))}
@@ -203,7 +234,10 @@ export default function IncidentMntDetailPage() {
                 <div className="body-16_SB text-gray-400 my-4">미확인</div>
                 <div className="space-y-3" ref={unconfirmedListRef}>
                   {unconfirmedUsers?.map((user) => (
-                    <div key={user.id} className="flex items-center gap-2 text-gray-400">
+                    <div
+                      key={user.id}
+                      className="flex items-center gap-2 text-gray-400"
+                    >
                       <span className="body-18">{user.name}</span>
                     </div>
                   ))}
@@ -218,6 +252,13 @@ export default function IncidentMntDetailPage() {
         comments={comments}
         onAddComment={handleAddComment}
         currentUser="Noticore User"
+      />
+
+      <AlertDialog
+        open={alertOpen}
+        onOpenChange={setAlertOpen}
+        type={alertInfo.type}
+        description={alertInfo.description}
       />
     </div>
   );

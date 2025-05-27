@@ -1,37 +1,22 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-//import { navigate } from "@/shared/lib/navigation";
-import authApi from "@/features/auth/api/auth";
-
 import { toast } from "sonner";
-import { performLocalLogout } from "../lib/localLogout";
+import { useAuth } from "../context/AuthContext";
 
 export default function LogoutButton() {
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
+  const { logout, isLoading: isLoggingOut } = useAuth();
 
   const handleLogout = async () => {
     if (isLoggingOut) return;
 
-    setIsLoggingOut(true);
-
     try {
-      // 로컬 인증 정보 삭제
-      performLocalLogout();
+      await logout();
       toast.success("로그아웃되었습니다.");
-      // 로그아웃 API 호출
-      await authApi.logout();
       navigate("/");
     } catch (error) {
-      // 오류가 발생해도 로컬 인증 정보는 삭제
-      performLocalLogout();
       // 오류가 발생해도 로그인 페이지로 리다이렉트
       navigate("/");
-
       toast.error("로그아웃 처리 중 오류가 발생했습니다.");
-    } finally {
-      setIsLoggingOut(false);
     }
   };
 

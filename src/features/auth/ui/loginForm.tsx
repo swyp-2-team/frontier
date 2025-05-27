@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@shared/lib/utils";
 import { Button } from "@shared/components/ui/button";
 import {
@@ -10,11 +11,8 @@ import {
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import LoginError from "@/shared/components/ui/loginerror";
-//import { navigate } from "@/shared/lib/navigation";
-import { useNavigate } from "react-router-dom";
 import { CheckBox } from "./checkbox";
-import authApi from "../api/auth";
-
+import { useAuth } from "../context/AuthContext";
 import EyeOn from "@/assets/icons/eyes_on.svg?react";
 import EyeOff from "@/assets/icons/eyes_off.svg?react";
 
@@ -23,6 +21,9 @@ export function LoginForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const navigate = useNavigate();
+  // Auth 컨텍스트 사용
+  const { login, isLoading } = useAuth();
+
   // 폼 입력값 상태
   const [formValues, setFormValues] = useState({
     email: "",
@@ -34,7 +35,6 @@ export function LoginForm({
     isLoginChecked: false,
     pwIconChecked: false,
     errors: "",
-    isSubmitting: false,
   });
 
   // 토글 함수
@@ -53,7 +53,7 @@ export function LoginForm({
     }));
 
     // 해당 필드의 에러 지우기
-    if (state.errors[name as keyof typeof state.errors]) {
+    if (state.errors) {
       setState((prev) => ({
         ...prev,
         errors: "",
@@ -64,40 +64,22 @@ export function LoginForm({
   // 로그인 처리 함수
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setState((prev) => ({ ...prev, isSubmitting: true }));
 
     try {
-      /*const response = */ await authApi.login(formValues);
-      //console.log("로그인 성공:", response);
-      setState((prev) => ({
-        ...prev,
-        errors: "",
-        isSubmitting: false,
-      }));
+      await login(formValues);
+      setState((prev) => ({ ...prev, errors: "" }));
 
-      handleLoginSuccess();
+      // 로그인 성공 후 처리
+      const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
+      sessionStorage.removeItem("redirectAfterLogin");
+
+      navigate(redirectUrl || "/home");
     } catch (error) {
       console.error("로그인 실패:", error);
       setState((prev) => ({
         ...prev,
         errors: "Email 또는 Password가 일치하지 않습니다.",
-        isSubmitting: false,
       }));
-    }
-  };
-
-  // 로그인 성공 후 처리
-  const handleLoginSuccess = () => {
-    // 로그인 전에 저장된 리다이렉트 URL 확인
-    const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
-    // 리다이렉트 URL이 존재하면 해당 URL로 이동
-    sessionStorage.removeItem("redirectAfterLogin");
-
-    if (redirectUrl) {
-      navigate(redirectUrl);
-    } else {
-      // 리다이렉트 URL이 없으면 기본 페이지로 이동
-      navigate("/home");
     }
   };
 
@@ -153,9 +135,7 @@ export function LoginForm({
                     )}
                   </div>
                 </div>
-                {state.errors && (
-                  <LoginError errorText={state.errors} />
-                )}
+                {state.errors && <LoginError errorText={state.errors} />}
               </div>
               <div className="pl-2.5 flex items-start">
                 <CheckBox
@@ -167,9 +147,9 @@ export function LoginForm({
               <Button
                 type="submit"
                 className="w-full 2xl:w-full my-10 body-16_SB"
-                disabled={state.isSubmitting}
+                disabled={isLoading}
               >
-                {state.isSubmitting ? "로그인 중..." : "로그인"}
+                {isLoading ? "로그인 중..." : "로그인"}
               </Button>
             </div>
           </form>

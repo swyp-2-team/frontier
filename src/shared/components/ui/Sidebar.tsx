@@ -3,7 +3,7 @@ import HomeIcon from "@/assets/icons/home.svg?react";
 import PencilIcon from "@/assets/icons/pencil.svg?react";
 import DataIcon from "@/assets/icons/data.svg?react";
 import SheildIcon from "@/assets/icons/shield.svg?react";
-import { useGetCurrentPath } from "@/shared/hooks/useGetCurrentPath";
+import { useGetCurrentPath } from "@/shared/lib/useGetCurrentPath";
 
 export default function Sidebar() {
   // 현재 경로 가져오기

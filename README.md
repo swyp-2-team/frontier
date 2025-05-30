@@ -8,7 +8,7 @@ Frontier는 장애 관리 및 모니터링을 위한 웹 애플리케이션 noti
 
 # 팀 정보
 
-SWYP 2기 2팀 (Noticore - FrontEnd Part)
+SWYP 9기 2팀 (Noticore - FrontEnd Part)
 
 - 강진수
 - 강영훈
@@ -23,10 +23,10 @@ SWYP 2기 2팀 (Noticore - FrontEnd Part)
 
 # 기술 스택
 
-- Frontend: React, TypeScript
+- 프레임워크/언어: React, TypeScript
 - 상태 관리: TanStack Query (React Query)
 - 라우팅: React Router
-- 스타일링: Tailwind CSS
+- 스타일링: Tailwind CSS, shadcn/ui
 - API 통신: Axios
 - 빌드 도구: Vite
 
